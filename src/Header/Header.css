@@ -1,0 +1,8 @@
+.headerWrappper{
+padding:5px;
+background:#fff;
+}
+.logo{width:122px;padding:9px 0 0px 20px;}
+.menu li{float:left;padding:10px;}
+.menu .pipSep{padding:10px 0;}
+.menu a{color:#333;}
