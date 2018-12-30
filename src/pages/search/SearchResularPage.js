@@ -15,8 +15,11 @@ class SearchResultPage extends React.Component {
       return (
         <div>
           <Header /> 
-          {this.state.paramValue.st }
-          {this.state.paramValue.ft }
+          <p>{this.state.paramValue.st }</p>
+          <p>{this.state.paramValue.ft }</p>
+          <p>{this.state.paramValue.gmdata}</p>
+          <p>{this.state.paramValue.pmdata}</p>
+          
         </div>
           
       );
