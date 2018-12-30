@@ -4,6 +4,7 @@ import './App.css';
 import Clock from './Clock.js';
 import NameForm from './NameForm.js';
 import Home from './pages/Home/Home.js';
+import SearchResultPage from './pages/search/SearchResularPage.js';
 import { Switch, Route, BrowserRouter } from 'react-router-dom'
 
 
@@ -12,6 +13,7 @@ class App extends Component {
     super();
     this.state = {
       name: 'siva',
+      searchText: 'sivaprakash'
     };
     //this.handleClick = this.handleClick.bind(this);
   }
@@ -23,8 +25,12 @@ class App extends Component {
 
           <Switch>
             <Route exact path='/' component={Home} />
-            <Route path='/form' render={() =>
-              <NameForm Name={this.state.name} />
+            <Route path='/form' 
+              render={() =>
+                <NameForm Name={this.state.name} />
+              } />
+            <Route path='/SearchResultPage' render={() =>
+              <SearchResultPage SearchText={this.state.searchText} />
             } />
           </Switch>
         </BrowserRouter>
