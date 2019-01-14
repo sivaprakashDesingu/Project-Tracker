@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Header from './../../Header/Header.js'
+import LeftSection from './../../global/LeftSection/LeftSection';
 import './Home.css';
+import Tile from './../common/Tile/Tile.js';
 
 class Home extends React.Component {
   constructor(props) {
@@ -66,7 +68,35 @@ class Home extends React.Component {
         {/* <h1>Hello, world!</h1>
           <h2>It is {this.state.date.toLocaleTimeString()}.</h2> */}
         <Header />
-        <div class="homepage>">
+        <div class="clear">
+          <div class="floatLeft leftSection">
+            <LeftSection />
+          </div>
+          <div class="floatLeft rightSection">
+            {/* <div class="bredscrmbs clear">
+                <div class="floatLeft">
+                    <span>
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                    </span>
+                    <span>Dashboard</span>
+                </div>
+                <div class="floatRight">
+                    <span>You are here: <span>home</span>><span class="curn">Dashboard</span></span>
+                </div>
+            </div> */}
+            <div class="grid col-4">
+            <Tile count="30" tileName="Total project" />
+            <Tile count="9" tileName="Pending project" />
+            <Tile count="1" tileName="Progress project" />
+            <Tile count="20" tileName="Completed project" />
+            
+          
+            </div>
+            
+          </div>
+        </div>
+        
+        {/* <div class="homepage>">
           <div class="nw_pg hme_pg">
             <div class="hero" id="hero" >
               <div class="contwrap">
@@ -85,12 +115,48 @@ class Home extends React.Component {
                         </form>
                       </div>
                     </div>
+
+                    
                   </div>
                 </section>
               </div>
             </div>
+            <div class="contwrap">
+              <section>
+                <div class="hmepod">
+                   <h2>Postgraduate qualifications</h2>
+                  <div class="qualpas">
+                  <Tile 
+                      patternimage="https://mtest.postgraduatesearch.com/pgs-cont/img/qualification/master-pat309.jpg" 
+                      classNames="mastbg" 
+                      qualificationName="Master"/>
+                   <Tile patternimage="https://mtest.postgraduatesearch.com/pgs-cont/img/qualification/phd-pat309.jpg" 
+                         classNames="phdbg" 
+                         qualificationName="PhD"/>
+                   <Tile 
+                      patternimage="https://mtest.postgraduatesearch.com/pgs-cont/img/qualification/pgce-pat309.jpg" 
+                      classNames="pgcebg" 
+                      qualificationName="PGCE"/>
+                   <Tile 
+                      patternimage="https://mtest.postgraduatesearch.com/pgs-cont/img/qualification/mba-pat309.jpg" 
+                      classNames="mbabg" 
+                      qualificationName="MBA"/>
+                   <Tile 
+                      patternimage="https://mtest.postgraduatesearch.com/pgs-cont/img/qualification/pgdip-pat309.jpg" 
+                      classNames="pgdipbg" 
+                      qualificationName="PGDip"/>
+                   <Tile 
+                      patternimage="https://mtest.postgraduatesearch.com/pgs-cont/img/qualification/pgcert-pat309.jpg"  
+                      classNames="pgcertbg" 
+                      qualificationName="PGCert"/>
+                  </div>
+                   
+                   
+               </div>
+              </section>
+              </div>
           </div>
-        </div>
+        </div> */}
       </div>
     );
   }

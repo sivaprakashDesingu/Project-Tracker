@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Clock from './Clock.js';
 import NameForm from './NameForm.js';
 import Home from './pages/Home/Home.js';
 import SearchResultPage from './pages/search/SearchResularPage.js';
