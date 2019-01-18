@@ -3,6 +3,7 @@ import Header from './../../Header/Header.js'
 import LeftSection from './../../global/LeftSection/LeftSection';
 import './Home.css';
 import Tile from './../common/Tile/Tile.js';
+import {Chart} from 'react-google-charts';
 
 class Home extends React.Component {
   constructor(props) {
@@ -92,71 +93,96 @@ class Home extends React.Component {
             
           
             </div>
+
+            <div class="statsInfro clear">
+              <div class="floatLeft overall">
+                <h2>Task Overview</h2>
+                <div class="chatwrp">
+                <Chart
+                    width={'100%'}
+                    height={'467px'}
+                    chartType="Line"
+                    loader={<div>Loading Chart</div>}
+                    data={[
+                      [
+                        'Week',
+                        'Completed',
+                        'Pending',
+                        'In Progress',
+                      ],
+                      ['week1', 11.9, 17.6, 10.4],
+                      ['Week2', 37.8, 80.8, 41.8],
+                      ['Week3', 30.9, 69.5, 32.4],
+                      ['Week4', 25.4, 57, 25.7],
+                    ]}
+                    options={{
+
+                      chart: {
+                        title: 'Overall performace month wise',
+                        subtitle: 'Jan 2019',
+                        hAxis: {
+                          title: 'Total Tasks',
+                          minValue: 0,
+                        },
+                      },
+                    }}
+                    rootProps={{ 'data-testid': '3' }}
+                  />
+                </div>
+                </div>
+               
+              <div class="floatLeft currentWork">
+                      <div class="prgressTask">
+                          <h3>Task in progress</h3>
+                          <h4>A/B testing</h4>
+                          <span class="per">
+                           <span class="prgstat" style={{background: '#5fa2dd',width:'50%'}}></span>
+                          </span>
+                          <span class="stausHed">Status
+                          
+                          </span>
+                          <span class="status">On Hold</span>
+
+                          <div class="btnwrp">
+                            <a href="#">Pause</a>
+                            <a href="#">Completed</a>
+                          </div>
+                      </div>
+                      <div class="prgressTask">
+                          <h3>Task in progress</h3>
+                          <h4>A/B testing</h4>
+                          <span class="per" >
+                          <span class="prgstat" style={{background: '#f4b400',width:'25%'}}></span>
+                          </span>
+                          <span class="stausHed">Status</span>
+                          <span class="status">On Hold</span>
+
+                          <div class="btnwrp">
+                            <a href="#">Pause</a>
+                            <a href="#">Completed</a>
+                          </div>
+                      </div>
+                      <div class="prgressTask">
+                          <h3>Task in progress</h3>
+                          <h4>A/B testing</h4>
+                          <span class="per" >
+                          <span class="prgstat" style={{background: '#0ca033',width:'75%'}}></span>
+                          </span>
+                          <span class="stausHed">Status</span>
+                          <span class="status">On Hold</span>
+
+                          <div class="btnwrp">
+                            <a href="#">Pause</a>
+                            <a href="#">Completed</a>
+                          </div>
+                      </div>
+              </div>
+            </div>
             
           </div>
         </div>
         
-        {/* <div class="homepage>">
-          <div class="nw_pg hme_pg">
-            <div class="hero" id="hero" >
-              <div class="contwrap">
-                <section>
-                  <div class="hme_srch">
-                    <div class="hme_srchdiv">
-                      <h1>Start your postgraduate journey </h1>
-                      <p>Discover the courses, funding and advice to get you there</p>
-                      <div class="subql_srch clr">
-                        <form class="nwhme_sr" id="homesearchform" method="post" action="/pgs/pgs_browse.pg_design">
-                          <input type="text" placeholder={this.state.data} onChange={this.updateState} />
-                          <button aria-label="Home page submit button" class="nworg_btn nwbtn" type="button" onClick={this.handleOnClick} >
-                            <i class="fa fa-search"></i>
-                          </button>
-                          <div class="qualtxt" id="qualtxt">Masters </div>
-                        </form>
-                      </div>
-                    </div>
-
-                    
-                  </div>
-                </section>
-              </div>
-            </div>
-            <div class="contwrap">
-              <section>
-                <div class="hmepod">
-                   <h2>Postgraduate qualifications</h2>
-                  <div class="qualpas">
-                  <Tile 
-                      patternimage="https://mtest.postgraduatesearch.com/pgs-cont/img/qualification/master-pat309.jpg" 
-                      classNames="mastbg" 
-                      qualificationName="Master"/>
-                   <Tile patternimage="https://mtest.postgraduatesearch.com/pgs-cont/img/qualification/phd-pat309.jpg" 
-                         classNames="phdbg" 
-                         qualificationName="PhD"/>
-                   <Tile 
-                      patternimage="https://mtest.postgraduatesearch.com/pgs-cont/img/qualification/pgce-pat309.jpg" 
-                      classNames="pgcebg" 
-                      qualificationName="PGCE"/>
-                   <Tile 
-                      patternimage="https://mtest.postgraduatesearch.com/pgs-cont/img/qualification/mba-pat309.jpg" 
-                      classNames="mbabg" 
-                      qualificationName="MBA"/>
-                   <Tile 
-                      patternimage="https://mtest.postgraduatesearch.com/pgs-cont/img/qualification/pgdip-pat309.jpg" 
-                      classNames="pgdipbg" 
-                      qualificationName="PGDip"/>
-                   <Tile 
-                      patternimage="https://mtest.postgraduatesearch.com/pgs-cont/img/qualification/pgcert-pat309.jpg"  
-                      classNames="pgcertbg" 
-                      qualificationName="PGCert"/>
-                  </div>
-                   
-                   
-               </div>
-              </section>
-              </div>
-          </div>
-        </div> */}
+        
       </div>
     );
   }

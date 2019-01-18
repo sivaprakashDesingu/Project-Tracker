@@ -14,7 +14,7 @@ body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
   font-weight: 400;
-  font-family: 'Roboto Slab', serif;
+  /* font-family: 'Roboto Slab', serif; */
 }
 
 code {
@@ -238,7 +238,8 @@ header {
 .leftSections .secLinks {
   padding: 10px 15px;
   cursor: pointer;
-  transition: .3s ease all;
+  font-size:12px;
+  transition:.3s ease all;
 }
 
 .leftSections .secLinks:hover {
