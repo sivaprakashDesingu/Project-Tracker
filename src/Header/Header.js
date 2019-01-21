@@ -144,7 +144,7 @@ class Header extends React.Component {
                 </div>
             </div>
 
-            <div class="headerRightWrapper floatRight">
+            {/* <div class="headerRightWrapper floatRight">
                 <div class="user floatLeft">
                     <a href="#">
                         <img src="http://squaredesigns.net/jasmine/img/av1.png" alt="user_profile" />
@@ -152,6 +152,10 @@ class Header extends React.Component {
                     </a>
                 </div>
 
+            </div> */}
+
+            <div class="floatRight leadsection">
+                <a href="#">Create Project</a>
             </div>
         </div>
     </header>

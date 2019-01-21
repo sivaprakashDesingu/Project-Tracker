@@ -74,17 +74,6 @@ class Home extends React.Component {
             <LeftSection />
           </div>
           <div class="floatLeft rightSection">
-            {/* <div class="bredscrmbs clear">
-                <div class="floatLeft">
-                    <span>
-                    <i class="fa fa-home" aria-hidden="true"></i>
-                    </span>
-                    <span>Dashboard</span>
-                </div>
-                <div class="floatRight">
-                    <span>You are here: <span>home</span>><span class="curn">Dashboard</span></span>
-                </div>
-            </div> */}
             <div class="grid col-4">
             <Tile count="30" tileName="Total project" />
             <Tile count="9" tileName="Pending project" />

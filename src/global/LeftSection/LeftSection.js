@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import logos from './../../assests/images/pro.png';
 
 class LeftSection extends React.Component {
 
@@ -6,10 +7,19 @@ class LeftSection extends React.Component {
         return (
             <aside>
                 <div class="leftSections">
-                <div class="section1">
+                <div class="profileSection">
+                    <div class="userimage">
+                        <img src={logos}  alt="user profile" />
+                    </div>
+                    <div class="userIfo">
+                        <span class="name">Sivaprakash Desingu</span>
+                        <span class="desi">Web Developer - HTML</span>
+                    </div>
+                </div>
+                <div class="section1 emp">
                     <ul>
                         <li class="secHeading">
-                            Navigation
+                            Activity
                         </li>
                         <li class="secLinks">
                             <span><i class="fa fa-tachometer" aria-hidden="true"></i></span>
@@ -22,36 +32,53 @@ class LeftSection extends React.Component {
                         </li>
                     </ul>
                 </div>
-                <div class="section1">
-                    <ul>
-                        <li class="secHeading">
-                            Components
-                        </li>
+                <div class="section1 lead">
+                    <div class="secHeading">
+                        <a href="#">Activity</a>
+                        <ul>                        
                         <li class="secLinks">
                             <span><i class="fa fa-tachometer" aria-hidden="true"></i></span>
-                            <span>Layouts</span>
+                            <span>Group</span>
                         </li>
                         <li class="secLinks">
                         <span><i class="fa fa-envelope" aria-hidden="true"></i></span>
-                            <span>UI ELements</span>
+                            <span>Reporting Employees</span>
                         
                         </li>
-                        <li class="secLinks">
-                        <span><i class="fa fa-envelope" aria-hidden="true"></i></span>
-                            <span>Pages</span>
                         
-                        </li>
-                        <li class="secLinks">
-                        <span><i class="fa fa-envelope" aria-hidden="true"></i></span>
-                            <span>Forms</span>
-                        
-                        </li>
-                        <li class="secLinks">
-                        <span><i class="fa fa-envelope" aria-hidden="true"></i></span>
-                            <span>Tables</span>
-                        
-                        </li>
                     </ul>
+                    </div>
+                    <div class="secHeading">
+                        <a href="#">Attendace</a>
+                        <ul>                        
+                        <li class="secLinks">
+                            <span><i class="fa fa-tachometer" aria-hidden="true"></i></span>
+                            <span>Group</span>
+                        </li>
+                        <li class="secLinks">
+                        <span><i class="fa fa-envelope" aria-hidden="true"></i></span>
+                            <span>Reporting Employees</span>
+                        
+                        </li>
+                        
+                    </ul>
+                    </div>
+                    <div class="secHeading">
+                        <a href="#">SEtting</a>
+                        <ul>                        
+                        <li class="secLinks">
+                            <span><i class="fa fa-tachometer" aria-hidden="true"></i></span>
+                            <span>Group</span>
+                        </li>
+                        <li class="secLinks">
+                        <span><i class="fa fa-envelope" aria-hidden="true"></i></span>
+                            <span>Reporting Employees</span>
+                        
+                        </li>
+                        
+                    </ul>
+                    </div>
+                    
                 </div>
                 </div>
                 
