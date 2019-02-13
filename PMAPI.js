@@ -51,8 +51,9 @@ app.use(function (req, res, next) {
 var server = app.listen(8000, "localhost", function () {
     var host = 'localhost'
     var port = server.address().port
-    console.log("Example app listening at http://%s:%s", host, port)
+    console.log("Node Serve Running at http://%s:%s", host, port)
 });
+
 
 //rest api for logged in user profile picture
 app.post('/isValiduser/', function (req, res) {
