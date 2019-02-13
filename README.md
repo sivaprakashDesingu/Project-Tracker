@@ -6,7 +6,7 @@ This is the web application wheere a admin can assign the task to their sub Empl
 ## Ready to Contribute, Follow me
 
 ## Running the React JS
-Git clone https://github.com/sivaprakashDesingu/Project-Tracker.git
+git clone https://github.com/sivaprakashDesingu/Project-Tracker.git
 
 cd project-Tracker
 
