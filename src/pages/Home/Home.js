@@ -4,15 +4,22 @@ import LeftSection from './../../global/LeftSection/LeftSection';
 import './Home.css';
 import Tile from './../common/Tile/Tile.js';
 import {Chart} from 'react-google-charts';
+import Calendar from 'react-calendar';
+import { withRouter } from 'react-router-dom'
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: 'Initial data...',
-      data2: 'Manisha',
-      getMethodData: "yet to fetch",
-      postMethodData: "yet to fetch",
+      date: new Date(),
+      items : [
+        { id: 'PM-00001', task: 'Drag and Dro', startDate:'Jan 3 2019',endDate:'Jan 13 2019',estDate:'Jan 13 2019',Status:'Done'},
+        { id: 'PM-00002', task: 'Voice API', startDate:'Jan 3 2019',endDate:'Jan 13 2019',estDate:'Jan 13 2019',Status:'Done'},
+        { id: 'PM-00002', task: 'Network API', startDate:'Jan 3 2019',endDate:'Jan 13 2019',estDate:'Jan 13 2019',Status:'Done' },
+        { id: 'PM-00003', task: 'PGS Fundig page', startDate:'Jan 3 2019',endDate:'Jan 13 2019',estDate:'Jan 13 2019',Status:'Done'},
+        { id: 'PM-00004', task: 'PGS Newsletter', startDate:'Jan 3 2019',endDate:'Jan 13 2019',estDate:'Jan 13 2019',Status:'Done' }
+      ],
+      paramValue: this.props.location.state
     }
     this.updateState = this.updateState.bind(this);
   }
@@ -20,162 +27,116 @@ class Home extends React.Component {
     this.setState({ data: e.target.value });
   }
 
-  handleOnClick = () => {
 
-
-    //alert("yes"+this.state.data);
-    this.props.history.push({
-      pathname: '/SearchResultPage',
-      state: {
-        st: this.state.data,
-        ft: this.state.data2,
-        gmdata: this.state.getMethodData,
-        pmdata: this.state.postMethodData
-      }
-    });
-  }
+  onChange = date => this.setState({ date })
 
   componentDidMount() {
-    fetch('http://localhost:8080/getMethod/', 
-      { mode: 'cors' })
-      .then(results => {
-        return results.json();
-      })
-      .then(data => {
-        let person = data;
-        this.setState({ getMethodData: person });
-        console.log("get state: ", this.state.getMethodData);
-      });
-
-
-      fetch('http://localhost:8080/postMethod/', {
-        method: 'POST',
-        mode: 'cors' ,
-        
-        body: {
-          "email": "yes"
-        }
-      }).then(res => res.json())
-      .then(data => {
-        let person = data;
-        this.setState({ postMethodData: person });
-        console.log("post state: ", this.state.postMethodData);
-      })
+    console.log(this.state.paramValue.EmpName);
 
   }
   render() {
+
+    var listItems = this.state.items.map(function(item) {
+			return (
+        <div className="grid col-6">
+          <div className="gridBody">{item.id}</div>
+          <div className="gridBody">{item.task}</div>
+          <div className="gridBody">{item.startDate}</div>
+          <div className="gridBody">{item.endDate}</div>
+          <div className="gridBody">{item.estDate}</div>
+          <div className="gridBody">{item.Status}</div>
+        </div>
+			);
+		});
     return (
       <div>
         {/* <h1>Hello, world!</h1>
           <h2>It is {this.state.date.toLocaleTimeString()}.</h2> */}
         <Header />
-        <div class="clear">
-          <div class="floatLeft leftSection">
-            <LeftSection />
+        <div className="clear">
+          <div className="floatLeft leftSection">
+            <LeftSection Name={this.state.paramValue.EmpName}/>
           </div>
-          <div class="floatLeft rightSection">
-            {/* <div class="bredscrmbs clear">
-                <div class="floatLeft">
-                    <span>
-                    <i class="fa fa-home" aria-hidden="true"></i>
-                    </span>
-                    <span>Dashboard</span>
-                </div>
-                <div class="floatRight">
-                    <span>You are here: <span>home</span>><span class="curn">Dashboard</span></span>
-                </div>
-            </div> */}
-            <div class="grid col-4">
+          <div className="floatLeft rightSection" >
+            
+            <div className="grid col-3">
             <Tile count="30" tileName="Total project" />
             <Tile count="9" tileName="Pending project" />
-            <Tile count="1" tileName="Progress project" />
+            
             <Tile count="20" tileName="Completed project" />
             
           
             </div>
 
-            <div class="statsInfro clear">
-              <div class="floatLeft overall">
-                <h2>Task Overview</h2>
-                <div class="chatwrp">
-                <Chart
-                    width={'100%'}
-                    height={'467px'}
-                    chartType="Line"
-                    loader={<div>Loading Chart</div>}
-                    data={[
-                      [
-                        'Week',
-                        'Completed',
-                        'Pending',
-                        'In Progress',
-                      ],
-                      ['week1', 11.9, 17.6, 10.4],
-                      ['Week2', 37.8, 80.8, 41.8],
-                      ['Week3', 30.9, 69.5, 32.4],
-                      ['Week4', 25.4, 57, 25.7],
-                    ]}
-                    options={{
-
-                      chart: {
-                        title: 'Overall performace month wise',
-                        subtitle: 'Jan 2019',
-                        hAxis: {
-                          title: 'Total Tasks',
-                          minValue: 0,
-                        },
-                      },
-                    }}
-                    rootProps={{ 'data-testid': '3' }}
-                  />
+            <div className="statsInfro clear">
+              <div className="floatLeft overall">
+                <h2>Task Sheet</h2>
+                <div className="chatwrp timst">
+                  <div className="grid col-6">
+                      <div className="Head">Task id </div>
+                      <div className="Head">Task Name</div>
+                      <div className="Head">Start Date</div>
+                      <div className="Head">End Date</div>
+                      <div className="Head">Est. Date</div>
+                      <div className="Head">Status</div>
+                  </div>
+                  {listItems}
                 </div>
                 </div>
                
-              <div class="floatLeft currentWork">
-                      <div class="prgressTask">
+              
+            </div>
+
+            <div className="clear">
+              <div className="floatLeft calsec">
+              <Calendar onChange={this.onChange} value={this.state.date}  />
+              </div>
+              <div className="floatLeft currentWork">
+                      <div className="prgressTask">
                           <h3>Task in progress</h3>
                           <h4>A/B testing</h4>
-                          <span class="per">
-                           <span class="prgstat" style={{background: '#5fa2dd',width:'50%'}}></span>
+                          <span className="per">
+                           <span className="prgstat" style={{background: '#5fa2dd',width:'50%'}}></span>
                           </span>
-                          <span class="stausHed">Status
+                          <span className="stausHed">Status
                           
                           </span>
-                          <span class="status">On Hold</span>
+                          <span className="status">On Hold</span>
 
-                          <div class="btnwrp">
+                          <div className="btnwrp">
                             <a href="#">Pause</a>
                             <a href="#">Completed</a>
                           </div>
                       </div>
-                      <div class="prgressTask">
+                      <div className="prgressTask">
                           <h3>Task in progress</h3>
                           <h4>A/B testing</h4>
-                          <span class="per" >
-                          <span class="prgstat" style={{background: '#f4b400',width:'25%'}}></span>
+                          <span className="per" >
+                          <span className="prgstat" style={{background: '#f4b400',width:'25%'}}></span>
                           </span>
-                          <span class="stausHed">Status</span>
-                          <span class="status">On Hold</span>
+                          <span className="stausHed">Status</span>
+                          <span className="status">On Hold</span>
 
-                          <div class="btnwrp">
+                          <div className="btnwrp">
                             <a href="#">Pause</a>
                             <a href="#">Completed</a>
                           </div>
                       </div>
-                      <div class="prgressTask">
+                      <div className="prgressTask">
                           <h3>Task in progress</h3>
                           <h4>A/B testing</h4>
-                          <span class="per" >
-                          <span class="prgstat" style={{background: '#0ca033',width:'75%'}}></span>
+                          <span className="per" >
+                          <span className="prgstat" style={{background: '#0ca033',width:'75%'}}></span>
                           </span>
-                          <span class="stausHed">Status</span>
-                          <span class="status">On Hold</span>
+                          <span className="stausHed">Status</span>
+                          <span className="status">On Hold</span>
 
-                          <div class="btnwrp">
+                          <div className="btnwrp">
                             <a href="#">Pause</a>
                             <a href="#">Completed</a>
                           </div>
                       </div>
+                      
               </div>
             </div>
             
@@ -188,4 +149,4 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+export default withRouter(Home);

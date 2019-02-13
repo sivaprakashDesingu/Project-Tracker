@@ -2,3 +2,6 @@
 padding:5px;
 background:#fff;
 }
+
+.leadsection{padding:24px 40px;}
+.leadsection a{padding:5px 10px;min-width:150px;color:#c56c8a;border:1px solid #c56c8a;border-radius:25px;font-size:14px;}

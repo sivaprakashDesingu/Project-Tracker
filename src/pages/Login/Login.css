@@ -1,0 +1,27 @@
+.login{
+background:url("./../../assests/images/hero_gra.png") no-repeat;
+min-height: 100vh;
+background-size: cover;
+position: relative;
+}
+.fromwrp{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:1024px;color:#fff;}
+.loginFields{width:40%;}
+.manhead{font-size:35px;}
+.projectinfo{width:60%;}
+input{border:0;outline:0;background:none;padding: 35px 20px 5px 0px;border-bottom: 2px solid #fff;width: 100%;color:#fff;}
+.field{position: relative;width:350px;}
+.field label{
+position: absolute;
+top: 33px;
+font-size: 14px;
+left:0;
+transition:.5s ease all;
+}
+.field input:focus ~ label{
+top:10px;
+}
+.active input ~ label{
+    top:10px;  
+    font-size:12px; 
+}
+.btn{border:0;outline:0;padding:12px 20px;min-width:150px;margin:20px 0 0;background:#24ca48;border-radius:50px;font-size:16px;cursor: pointer;color:#fff;display:inline-block;text-align:center}

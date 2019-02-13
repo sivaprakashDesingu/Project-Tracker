@@ -1,57 +1,92 @@
 import React, { Component } from 'react';
-
+import logos from './../../assests/images/pro.png';
+import { withRouter } from 'react-router-dom'
 class LeftSection extends React.Component {
+
+
+    constructor(props) {
+        super(props);
+        this.state = {
+              
+        };
+      }
 
     render() {
         return (
             <aside>
-                <div class="leftSections">
-                <div class="section1">
+                <div className="leftSections">
+                <div className="profileSection">
+                    <div className="userimage">
+                        <img src={logos}  alt="user profile" />
+                    </div>
+                    <div className="userIfo">
+                        <span className="name">{this.props.Name}</span>
+                        <span className="desi">Web Developer - HTML</span>
+                    </div>
+                </div>
+                <div className="section1 emp">
                     <ul>
-                        <li class="secHeading">
-                            Navigation
+                        <li className="secHeading">
+                            Activity
                         </li>
-                        <li class="secLinks">
-                            <span><i class="fa fa-tachometer" aria-hidden="true"></i></span>
+                        <li className="secLinks">
+                            <span><i className="fa fa-tachometer" aria-hidden="true"></i></span>
                             <span>Dashboard</span>
                         </li>
-                        <li class="secLinks">
-                        <span><i class="fa fa-envelope" aria-hidden="true"></i></span>
+                        <li className="secLinks">
+                        <span><i className="fa fa-envelope" aria-hidden="true"></i></span>
                             <span>Email</span>
                         
                         </li>
                     </ul>
                 </div>
-                <div class="section1">
-                    <ul>
-                        <li class="secHeading">
-                            Components
+                <div className="section1 lead">
+                    <div className="secHeading">
+                        <a href="#">Activity</a>
+                        <ul>                        
+                        <li className="secLinks">
+                            <span><i className="fa fa-tachometer" aria-hidden="true"></i></span>
+                            <span>Group</span>
                         </li>
-                        <li class="secLinks">
-                            <span><i class="fa fa-tachometer" aria-hidden="true"></i></span>
-                            <span>Layouts</span>
-                        </li>
-                        <li class="secLinks">
-                        <span><i class="fa fa-envelope" aria-hidden="true"></i></span>
-                            <span>UI ELements</span>
+                        <li className="secLinks">
+                        <span><i className="fa fa-envelope" aria-hidden="true"></i></span>
+                            <span>Reporting Employees</span>
                         
                         </li>
-                        <li class="secLinks">
-                        <span><i class="fa fa-envelope" aria-hidden="true"></i></span>
-                            <span>Pages</span>
                         
-                        </li>
-                        <li class="secLinks">
-                        <span><i class="fa fa-envelope" aria-hidden="true"></i></span>
-                            <span>Forms</span>
-                        
-                        </li>
-                        <li class="secLinks">
-                        <span><i class="fa fa-envelope" aria-hidden="true"></i></span>
-                            <span>Tables</span>
-                        
-                        </li>
                     </ul>
+                    </div>
+                    <div className="secHeading">
+                        <a href="#">Attendace</a>
+                        <ul>                        
+                        <li className="secLinks">
+                            <span><i className="fa fa-tachometer" aria-hidden="true"></i></span>
+                            <span>Group</span>
+                        </li>
+                        <li className="secLinks">
+                        <span><i className="fa fa-envelope" aria-hidden="true"></i></span>
+                            <span>Reporting Employees</span>
+                        
+                        </li>
+                        
+                    </ul>
+                    </div>
+                    <div className="secHeading">
+                        <a href="#">SEtting</a>
+                        <ul>                        
+                        <li className="secLinks">
+                            <span><i className="fa fa-tachometer" aria-hidden="true"></i></span>
+                            <span>Group</span>
+                        </li>
+                        <li className="secLinks">
+                        <span><i className="fa fa-envelope" aria-hidden="true"></i></span>
+                            <span>Reporting Employees</span>
+                        
+                        </li>
+                        
+                    </ul>
+                    </div>
+                    
                 </div>
                 </div>
                 
@@ -61,4 +96,4 @@ class LeftSection extends React.Component {
     }
 }
 
-export default LeftSection;
+export default withRouter(LeftSection);

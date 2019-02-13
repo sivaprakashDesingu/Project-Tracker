@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import NameForm from './NameForm.js';
 import Home from './pages/Home/Home.js';
+import Login from './pages/Login/Login.js';
 import SearchResultPage from './pages/search/SearchResularPage.js';
 import { Switch, Route, BrowserRouter } from 'react-router-dom'
 
@@ -23,7 +24,9 @@ class App extends Component {
         <BrowserRouter>
 
           <Switch>
-            <Route exact path='/' component={Home} />
+            <Route exact path='/' component={Login} />
+            <Route exact path='/home' component={Home} />
+            
             <Route path='/form' 
               render={() =>
                 <NameForm Name={this.state.name} />
