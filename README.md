@@ -1,4 +1,4 @@
-##  Welcome to Prject tracker appplication
+##  Welcome to Project tracker appplication
 
 ## About PT
 This is the web application wheere a admin can assign the task to their sub Employees and Tracking the application.
