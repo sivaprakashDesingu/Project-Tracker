@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Feb 13, 2019 at 03:20 PM
+-- Generation Time: Feb 18, 2019 at 03:42 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.20
 
@@ -43,6 +43,7 @@ CREATE TABLE `Employee` (
 --
 
 INSERT INTO `Employee` (`EmpID`, `EmpName`, `PhoneNumber`, `EmpEmailID`, `password`, `Designation`, `Team`, `ReportingTo`, `Active`) VALUES
+('HCI_600', 'Gandhi Sakthi', '9999999999', 'sakthi@idp.com', '123456', 'Senior Manager', 'HTML', 'Direct Report', 'Yes'),
 ('HCI_669', 'Sivaprakash D', '770886870', 'sivaprakash.d@idp.com', 'shiva', 'Web developer', 'HTML', 'HCI_001', 'Yes');
 
 -- --------------------------------------------------------
@@ -53,7 +54,6 @@ INSERT INTO `Employee` (`EmpID`, `EmpName`, `PhoneNumber`, `EmpEmailID`, `passwo
 
 CREATE TABLE `Project` (
   `ProjectId` varchar(10) NOT NULL,
-  `EmpID` int(20) NOT NULL,
   `ProjectTitle` int(12) NOT NULL,
   `ProjectAssignedTo` int(255) NOT NULL,
   `ProjectStatus` int(50) NOT NULL,
@@ -61,7 +61,10 @@ CREATE TABLE `Project` (
   `ProjectCreatedBy` date NOT NULL,
   `ProjectTakenTime` date NOT NULL,
   `ProjectEstimatedFinishDate` date NOT NULL,
-  `ProjectFinishedDate` date NOT NULL
+  `ProjectFinishedDate` date NOT NULL,
+  `ReferenceLinks` varchar(500) NOT NULL,
+  `TechnologiesUsed` varchar(500) NOT NULL,
+  `source_comments` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -80,8 +83,7 @@ ALTER TABLE `Employee`
 -- Indexes for table `Project`
 --
 ALTER TABLE `Project`
-  ADD PRIMARY KEY (`ProjectId`),
-  ADD UNIQUE KEY `EmpID` (`EmpID`);
+  ADD PRIMARY KEY (`ProjectId`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
