@@ -63,3 +63,12 @@ app.post('/isValiduser/', function (req, res) {
         res.end(JSON.stringify(results));
     });
 });
+//rest api for logged in user profile picture
+app.post('/getLggedinEmployeeData/', function (req, res) {
+    var postData = req.body;
+    //console.log("select * from Employee where EmpEmailID="+postData.id);
+    connection.query('select * from Employee where EmpID=?', [postData.id], function (error, results, fields) {
+        if (error) throw error;
+        res.end(JSON.stringify(results));
+    });
+});
