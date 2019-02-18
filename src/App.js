@@ -5,6 +5,7 @@ import NameForm from './NameForm.js';
 import Home from './pages/Home/Home.js';
 import Login from './pages/Login/Login.js';
 import SearchResultPage from './pages/search/SearchResularPage.js';
+import NewProjectForm from './pages/newProForm/newProForm.js';
 import { Switch, Route, BrowserRouter } from 'react-router-dom'
 
 
@@ -33,6 +34,10 @@ class App extends Component {
               } />
             <Route path='/SearchResultPage' render={() =>
               <SearchResultPage SearchText={this.state.searchText} />
+            } />
+    
+    <Route path='/NewProjectForm' render={() =>
+                          <NewProjectForm SearchText={this.state.searchText} />
             } />
           </Switch>
         </BrowserRouter>
