@@ -36,7 +36,7 @@ class App extends Component {
               <SearchResultPage SearchText={this.state.searchText} />
             } />
     
-    <Route path='/NewProjectForm' render={() =>
+            <Route path='/NewProjectForm' render={() =>
                           <NewProjectForm SearchText={this.state.searchText} />
             } />
           </Switch>

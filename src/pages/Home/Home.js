@@ -10,6 +10,7 @@ import { withRouter } from 'react-router-dom'
 class Home extends React.Component {
   constructor(props) {
     super(props);
+    
     this.state = {
       date: new Date(),
       items : [
@@ -19,8 +20,13 @@ class Home extends React.Component {
         { id: 'PM-00003', task: 'PGS Fundig page', startDate:'Jan 3 2019',endDate:'Jan 13 2019',estDate:'Jan 13 2019',Status:'Done'},
         { id: 'PM-00004', task: 'PGS Newsletter', startDate:'Jan 3 2019',endDate:'Jan 13 2019',estDate:'Jan 13 2019',Status:'Done' }
       ],
-      paramValue: this.props.location.state
+      paramValue: this.props.location.state,
+      LoggedinEmpDet:[],
+      isDirectReportingPerson:false,
     }
+
+
+
     this.updateState = this.updateState.bind(this);
   }
   updateState(e) {
@@ -31,10 +37,45 @@ class Home extends React.Component {
   onChange = date => this.setState({ date })
 
   componentDidMount() {
-    console.log(this.state.paramValue.EmpName);
+    console.log(this.state.paramValue.EmpName+this.state.paramValue.employeeId);
+
+    {/* Get loggin E mployee Date*/}
+    var data = {
+      id: this.state.paramValue.employeeId
+  }
+    fetch("http://localhost:8000/getLggedinEmployeeData", {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        }).then(function(response) {
+            if (response.status >= 400) {
+              throw new Error("Bad response from server");
+            }
+            return response.json();
+        }).then(function(data) {
+            //console.log(data);
+            this.setState({LoggedinEmpDet:data});  
+            //console.log(this.state.LoggedinEmpDet[0]);
+
+            ///if(this.state.LoggedinEmpDet[0].Designation=="Senior Manager"){
+              this.setState({isDirectReportingPerson:this.state.LoggedinEmpDet[0].Designation});
+            //}else{
+              //this.setState({isDirectReportingPerson:this.state.LoggedinEmpDet[0].Designation});
+            //}
+            
+            //console.log(this.state.EmpRole);
+            
+        }.bind(this)).catch(function(err) {
+            console.log(err)
+        });
 
   }
   render() {
+    // var leftSection = this.state.LoggedinEmpDet.map(function(emp){
+    //   return (
+    //   <LeftSection Name={emp.EmpName} Designation={emp.Designation} />
+    //   )
+    // });
 
     var listItems = this.state.items.map(function(item) {
 			return (
@@ -52,10 +93,20 @@ class Home extends React.Component {
       <div>
         {/* <h1>Hello, world!</h1>
           <h2>It is {this.state.date.toLocaleTimeString()}.</h2> */}
-        <Header />
+       
+        <Header Role={this.state.isDirectReportingPerson}/>
         <div className="clear">
           <div className="floatLeft leftSection">
-            <LeftSection Name={this.state.paramValue.EmpName}/>
+            {/* {leftSection} */}
+
+            {
+                this.state.LoggedinEmpDet.map(function(emp){
+                  return (
+                  <LeftSection Name={emp.EmpName} Designation={emp.Designation} />
+                  )
+                })
+
+            }
           </div>
           <div className="floatLeft rightSection" >
             
@@ -83,8 +134,6 @@ class Home extends React.Component {
                   {listItems}
                 </div>
                 </div>
-               
-              
             </div>
 
             <div className="clear">

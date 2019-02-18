@@ -21,7 +21,7 @@ class LeftSection extends React.Component {
                     </div>
                     <div className="userIfo">
                         <span className="name">{this.props.Name}</span>
-                        <span className="desi">Web Developer - HTML</span>
+                        <span className="desi">{this.props.Designation}</span>
                     </div>
                 </div>
                 <div className="section1 emp">

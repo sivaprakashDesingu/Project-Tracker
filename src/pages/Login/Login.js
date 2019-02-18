@@ -6,15 +6,18 @@ class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: 'sivaprakash.d@idp.com',
-            password: 'shiva'
+            email: '',
+            password: '',
+            formHeading:'Please Login',
+            
         }
         this.updateState = this.updateState.bind(this);
         this.isLoggedin = this.isLoggedin.bind(this);
         
+        
     }
     updateState(e) {
-        this.setState({ data: e.target.value });
+        this.setState({ [e.target.name]: e.target.value });
     }
 
     /* handleOnClick = () => {
@@ -51,7 +54,8 @@ class Login extends React.Component {
                     pathname: '/Home',
                     state: {
                       Empemail: this.state.email,
-                      EmpName:data[0].EmpName
+                      EmpName:data[0].EmpName,
+                      employeeId: data[0].EmpID
                     }
                   });
             }
@@ -60,7 +64,7 @@ class Login extends React.Component {
         });
     };
 
-
+   
     isFloating(e) {
 
         var target = e.target;
@@ -79,17 +83,17 @@ class Login extends React.Component {
                         <div className="floatRight projectinfo">
                             <h1 className="manhead">Project Management</h1>
                             <p>Get started using a simplified management stystem that does this and that and some other things now.</p>
-                            <a href='#' className="btn ">Register</a>
+                            
                         </div>
                         <div className="floatLeft loginFields">
-                            <h1 className="manhead">Please Login</h1>
+                            <h1 className="manhead">{this.state.formHeading}</h1>
                             <form>
                                 <div className="field">
 
                                     <input id='email' type="text" name="email" autoComplete='off'
-
+            
                                         onBlur={this.isFloating}
-
+                                        onChange={this.updateState}
                                     />
                                     <label for="email">Email</label>
                                 </div>
@@ -97,9 +101,11 @@ class Login extends React.Component {
 
                                     <input id="paswd" type="password" name="password"
                                         onBlur={this.isFloating}
+                                        onChange={this.updateState}
                                     />
                                     <label for="paswd">Password</label>
                                 </div>
+                                {/* { this.state.showResults ? <Results /> : null } */}
                                 <button className="btn "  onClick={this.isLoggedin} type="button">Submit</button>
 
                             </form>
