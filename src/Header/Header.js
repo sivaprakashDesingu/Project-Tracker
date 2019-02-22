@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import './Header.css';
 import logo from './../assests/images/logo/logo.png';
+import NewProjectForm from '../pages/newProForm/newProForm';
 import { withRouter } from 'react-router-dom'
+import Cookies from 'universal-cookie';
 
 class Header extends React.Component {
     constructor(props) {
@@ -9,15 +11,27 @@ class Header extends React.Component {
         this.state = {
               
         };
+
+        this.openCreateProjectModel = this.openCreateProjectModel.bind(this);
       }
 
+      openCreateProjectModel(evt){
+         document.getElementById("newProjectLightbox").classList.toggle("open")
+      }
     render() {
         return (
             <div>
+                <div id="newProjectLightbox" className="lighbox">
+                <div className="lightboxWrapper">
+                    <span onClick={this.openCreateProjectModel} className="fa fa-times"></span>
+                    <NewProjectForm />
+                </div>
+                
+                </div>
                 <header>
                     <div className="clear">
                         <div className="logo floatLeft">
-                            <a href="#">
+                            <a href="javascript:void(0);">
                                 <img src="https://images1.content-hci.com/hca-cont/india/img/hcindia_idp_logo_v1.png" alt="HC Logo" width='204' height='50' />
                             </a>
                         </div>
@@ -166,7 +180,7 @@ class Header extends React.Component {
                            {(() => {
                                 if (this.props.Role == "Senior Manager") {
                                     return (
-                                        <a href="#">Create Project</a>
+                                        <a href="javascript:void(0);" onClick={this.openCreateProjectModel}>Create Project</a>
                                     )
                                 }
                             })()}

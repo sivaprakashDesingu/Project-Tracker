@@ -1,15 +1,21 @@
 .midtile{
     background: #fff;
     border: 1px solid #ddd;
-    padding: 20px;
+    padding: 20px 20px 40px;
     display:grid;
     transition:.5s ease all;
 }
 .midtile:hover{
 box-shadow:4px 10px 11px 6px rgba(86, 83, 83, 0.1);
 }
-.titleWrp{border-bottom:2px solid #337ab7;padding-bottom:12px;}
-.titleWrp h2{font-size:30px;padding-bottom:7px;}
+/* .titleWrp{border-bottom:2px solid #337ab7;padding-bottom:12px;} */
+
+.rippleCircle {
+position:relative;background-color:#ffffff;width:130px;height:130px;border-radius: 50%;box-shadow:0 0 0 0 rgba(156, 103, 219, 0.3), 0 0 0 15px rgba(156, 103, 219, 0.3), 0 0 0 10px rgba(156, 103, 219, 0.3), 0 0 0 5px rgba(156, 103, 219, 0.3),0 0 0 2px rgba(156, 103, 219, 0.3);
+margin:25px auto 0;
+}
+.rippleCircle h2{position: absolute;left: 50%;top: 50%;transform: translate(-50%,-50%);font-size: 50px;color:rgba(156, 103, 219,1)}
+/* .titleWrp h2{font-size:30px;padding-bottom:7px;}
 .titleWrp .floatLeft{font-size:10px;}
 .titleWrp .floatRight{font-size:35px;color:#2285a0;}
-.midtile .rcttask{font-size:12px;padding:10px 0 5px;}
+.midtile .rcttask{font-size:12px;padding:10px 0 5px;} */

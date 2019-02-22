@@ -6,7 +6,7 @@ import Home from './pages/Home/Home.js';
 import Login from './pages/Login/Login.js';
 import SearchResultPage from './pages/search/SearchResularPage.js';
 import NewProjectForm from './pages/newProForm/newProForm.js';
-import { Switch, Route, BrowserRouter } from 'react-router-dom'
+import { Switch, Route, BrowserRouter } from 'react-router-dom';
 
 
 class App extends Component {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Login.css';
-
-
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 class Login extends React.Component {
     constructor(props) {
         super(props);
@@ -50,6 +50,9 @@ class Login extends React.Component {
         }).then(function(data) {
             console.log(data)    
             if(data.length==1){
+                cookies.set('loggeinEmpId', data[0].EmpID, { path: '/' });
+                cookies.set('loggeinEmpName', data[0].EmpName, { path: '/' });
+                cookies.set('loggeinEmpEmail', this.state.email, { path: '/' });
                 this.props.history.push({
                     pathname: '/Home',
                     state: {
@@ -105,6 +108,7 @@ class Login extends React.Component {
                                     />
                                     <label for="paswd">Password</label>
                                 </div>
+                                
                                 {/* { this.state.showResults ? <Results /> : null } */}
                                 <button className="btn "  onClick={this.isLoggedin} type="button">Submit</button>
 

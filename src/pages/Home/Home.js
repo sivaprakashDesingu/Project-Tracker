@@ -2,12 +2,19 @@ import React, { Component } from 'react';
 import Header from './../../Header/Header.js'
 import LeftSection from './../../global/LeftSection/LeftSection';
 import './Home.css';
+import Server from '../server/server';
 import Tile from './../common/Tile/Tile.js';
 import {Chart} from 'react-google-charts';
 import Calendar from 'react-calendar';
 import { withRouter } from 'react-router-dom'
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
+
+
+
 
 class Home extends React.Component {
+  
   constructor(props) {
     super(props);
     
@@ -23,27 +30,28 @@ class Home extends React.Component {
       paramValue: this.props.location.state,
       LoggedinEmpDet:[],
       isDirectReportingPerson:false,
+      projectStatusList:[]
+
+      
     }
+    
 
 
-
-    this.updateState = this.updateState.bind(this);
+    //this.updateState = this.updateState.bind(this);
   }
-  updateState(e) {
-    this.setState({ data: e.target.value });
-  }
+  // updateState(e) {
+  //   this.setState({ data: e.target.value });
+  // }
 
 
   onChange = date => this.setState({ date })
 
   componentDidMount() {
-    console.log(this.state.paramValue.EmpName+this.state.paramValue.employeeId);
-
-    {/* Get loggin E mployee Date*/}
+    /* Get loggin E mployee Date*/
     var data = {
-      id: this.state.paramValue.employeeId
-  }
-    fetch("http://localhost:8000/getLggedinEmployeeData", {
+      id: cookies.get('loggeinEmpId')
+    }
+    fetch(Server.backendServer+"getLggedinEmployeeData", {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(data)
@@ -52,22 +60,32 @@ class Home extends React.Component {
               throw new Error("Bad response from server");
             }
             return response.json();
-        }).then(function(data) {
-            //console.log(data);
-            this.setState({LoggedinEmpDet:data});  
-            //console.log(this.state.LoggedinEmpDet[0]);
-
-            ///if(this.state.LoggedinEmpDet[0].Designation=="Senior Manager"){
-              this.setState({isDirectReportingPerson:this.state.LoggedinEmpDet[0].Designation});
-            //}else{
-              //this.setState({isDirectReportingPerson:this.state.LoggedinEmpDet[0].Designation});
-            //}
-            
-            //console.log(this.state.EmpRole);
-            
+        }).then(function(res) {
+            this.setState({LoggedinEmpDet:res});  
+            this.setState({isDirectReportingPerson:this.state.LoggedinEmpDet[0].Designation});     
         }.bind(this)).catch(function(err) {
             console.log(err)
         });
+        
+     /* Get loggin E mployee Date*/
+      /* GET NO OF PROJECT aSSIGNED BY LEAD */
+
+    fetch(Server.backendServer+"noOfProjectsByLead",{
+          method:"POST",
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(data)
+      }).then(function(response){
+          if (response.status >= 400) {
+              throw new Error("Bad response from server");
+          }
+          return response.json();
+      }).then(function(res){
+          console.log(res);
+          this.setState({projectStatusList:res});    
+      }.bind(this)).catch(function(err){
+          console.log(err)
+      });
+      /* GET NO OF PROJECT aSSIGNED BY LEAD */
 
   }
   render() {
@@ -102,6 +120,7 @@ class Home extends React.Component {
             {
                 this.state.LoggedinEmpDet.map(function(emp){
                   return (
+
                   <LeftSection Name={emp.EmpName} Designation={emp.Designation} />
                   )
                 })
@@ -111,12 +130,27 @@ class Home extends React.Component {
           <div className="floatLeft rightSection" >
             
             <div className="grid col-3">
-            <Tile count="30" tileName="Total project" />
+            {
+              this.state.projectStatusList.map(function(res){
+                  return(
+                    <div>
+                      {(() => {
+                                if (res.ProjectStatus=="Total") {
+                                    return (
+                                        <Tile count={res.counts} tileName={res.ProjectStatus} />
+                                    )
+                                }else{
+                                  
+                                }
+                            })()}
+                    </div>
+                    
+                  )
+              })
+              }
+            {/* <Tile count="30" tileName="Total project" />
             <Tile count="9" tileName="Pending project" />
-            
-            <Tile count="20" tileName="Completed project" />
-            
-          
+            <Tile count="20" tileName="Completed project" /> */}
             </div>
 
             <div className="statsInfro clear">
@@ -136,11 +170,14 @@ class Home extends React.Component {
                 </div>
             </div>
 
-            <div className="clear">
+            <div className="clear currentWork">
+            <h2>Work In Progress </h2>
               <div className="floatLeft calsec">
-              <Calendar onChange={this.onChange} value={this.state.date}  />
+              {/* <Calendar onChange={this.onChange} value={this.state.date}  /> */}
               </div>
-              <div className="floatLeft currentWork">
+              {/* {floatLeft currentWork } */}
+              <div className="grid col-3">
+
                       <div className="prgressTask">
                           <h3>Task in progress</h3>
                           <h4>A/B testing</h4>

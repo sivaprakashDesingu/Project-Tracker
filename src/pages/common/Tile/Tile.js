@@ -19,15 +19,23 @@ class Tile extends React.Component {
     return (
          <div className="midtile">
             <div className="titleWrp clear">
-              <div className="floatLeft">
+              
+                <div className="clear">
+                  <span className="floatLeft countHeading">{this.props.tileName}</span>
+                  <span className="floatRight ">Feb <i className="fa fa-angle-down"></i></span>
+                </div>
+                <div className="rippleCircle">
                 <h2>{this.props.count}</h2>
-                <span>{this.props.tileName}</span>
-              </div>
-              <div className="floatRight">
+                </div>
+
+                {/* <h2>{this.props.count}</h2>
+                <span>{this.props.tileName}</span> */}
+             
+              {/* <div className="floatRight">
                 <span><i className="fa fa-shopping-cart" aria-hidden="true"></i></span>
-              </div>
+              </div> */}
             </div>
-            <p className="rcttask">Recent project: Drag and Drop media</p>
+            {/* <p className="rcttask">Recent project: Drag and Drop media</p> */}
          </div>
      
     );
