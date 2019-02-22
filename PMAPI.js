@@ -72,3 +72,30 @@ app.post('/getLggedinEmployeeData/', function (req, res) {
         res.end(JSON.stringify(results));
     });
 });
+
+//is newproject assigned successfully
+app.post('/isTaskAssignedSuccesssfully/', function (req, res) {
+    var postData = req.body;
+    console.log(postData);
+    
+    /*//console.log("select * from Employee where EmpEmailID="+postData.id);
+    //var sql="INSERT INTO project (ProjectTitle,ProjectAssignedTo,ProjectStatus,ProjectPriority,ProjectCreatedBy,ProjectTakenTime,ProjectEstimatedFinishDate,ProjectFinishedDate) VALUES (?,?,?,?,?,?,?,?)";
+    var sql = "INSERT INTO project (ProjectTitle,ProjectDescription,ProjectAssignedTo,ProjectStatus,ProjectPriority,ProjectCreatedBy,ProjectEstimatedFinishDate,ProjectRef) VALUES ('" + postData.proTitle + "','" + postData.Discription + "','" + postData.assignTo + "','" + postData.projectStatus + "','" + postData.Priority + "','" + postData.createdBy + "','" + postData.dtbco + "','" + postData.Reference + "')";
+    console.log(sql); */
+    connection.query('INSERT INTO project (ProjectTitle,ProjectDescription,ProjectAssignedTo,ProjectStatus,ProjectPriority,ProjectCreatedBy,ProjectEstimatedFinishDate,ProjectRef) VALUES(?,?,?,?,?,?,?,?)', 
+    [postData.proTitle,postData.Discription,postData.assignTo,postData.projectStatus,postData.Priority,postData.createdBy,postData.dtbco,postData.Reference], function (error, results, fields) {
+        if (error) throw error;
+        res.end(JSON.stringify(results));
+    });
+});
+
+app.post('/noOfProjectsByLead/', function (req, res) {
+    var postData = req.body;
+    //console.log(postData);
+    //SELECT ProjectStatus,COUNT(*) counts FROM   project   where ProjectCreatedBy=? GROUP BY ProjectStatus UNION ALL SELECT 'Total',COUNT(*) counts FROM   project where ProjectCreatedBy=?;
+    connection.query("SELECT ProjectStatus,COUNT(*) counts FROM   project   where ProjectCreatedBy=? GROUP BY ProjectStatus UNION ALL SELECT 'Total',COUNT(*) counts FROM   project where ProjectCreatedBy=?", [postData.id,postData.id], function (error, results, fields) {
+        if (error) throw error;
+        res.end(JSON.stringify(results));
+    });
+  
+});
