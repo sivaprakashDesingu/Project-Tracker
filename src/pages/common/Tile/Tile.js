@@ -5,10 +5,7 @@ class Tile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      count: 'Initial data...',
-      header: 'Manisha',
-      getMethodData: "yet to fetch",
-      postMethodData: "yet to fetch",
+      
     }
     //this.updateState = this.updateState.bind(this);
   }
@@ -17,17 +14,25 @@ class Tile extends React.Component {
 
   render() {
     return (
-         <div class="midtile">
-            <div class="titleWrp clear">
-              <div class="floatLeft">
+         <div className={'midtile '+ this.props.Class}>
+            <div className="titleWrp clear">
+              
+                <div className="clear">
+                  <span className="floatLeft countHeading"><strong>{this.props.tileName} Project</strong></span>
+                  <span className="floatRight "><strong>Feb <i className="fa fa-angle-down"></i></strong></span>
+                </div>
+                <div className="rippleCircle">
                 <h2>{this.props.count}</h2>
-                <span>{this.props.tileName}</span>
-              </div>
-              <div class="floatRight">
-                <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
-              </div>
+                </div>
+
+                {/* <h2>{this.props.count}</h2>
+                <span>{this.props.tileName}</span> */}
+             
+              {/* <div className="floatRight">
+                <span><i className="fa fa-shopping-cart" aria-hidden="true"></i></span>
+              </div> */}
             </div>
-            <p class="rcttask">Recent project: Drag and Drop media</p>
+            {/* <p className="rcttask">Recent project: Drag and Drop media</p> */}
          </div>
      
     );

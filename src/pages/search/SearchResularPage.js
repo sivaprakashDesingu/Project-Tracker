@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Header from './../../Header/Header.js'
+// import Header from './../Header/Header.js'
 import { withRouter } from 'react-router-dom'
 
 class SearchResultPage extends React.Component {
@@ -14,7 +14,7 @@ class SearchResultPage extends React.Component {
     render() {
       return (
         <div>
-          <Header /> 
+          {/* <Header />  */}
           <p>{this.state.paramValue.st }</p>
           <p>{this.state.paramValue.ft }</p>
           <p>{this.state.paramValue.gmdata}</p>

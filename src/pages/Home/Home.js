@@ -1,66 +1,101 @@
 import React, { Component } from 'react';
-import Header from './../../Header/Header.js'
+// import Header from './../Header/Header.js'
+import Header from './../common/Header/Header.js';
 import LeftSection from './../../global/LeftSection/LeftSection';
 import './Home.css';
+import Server from '../server/server';
 import Tile from './../common/Tile/Tile.js';
 import {Chart} from 'react-google-charts';
+import Calendar from 'react-calendar';
+import { withRouter } from 'react-router-dom'
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
+
+
+
 
 class Home extends React.Component {
+  
   constructor(props) {
     super(props);
+    
     this.state = {
-      data: 'Initial data...',
-      data2: 'Manisha',
-      getMethodData: "yet to fetch",
-      postMethodData: "yet to fetch",
+      date: new Date(),
+      // items : [
+      //   { id: 'PM-00001', task: 'Drag and Drog Drag and Drog Drag and Drog', assignTo:"http://localhost:3000/static/media/pro.9726ea3d.png,http://localhost:3000/static/media/pro.9726ea3d.png,http://localhost:3000/static/media/pro.9726ea3d.png", startDate:'Jan 3 2019',endDate:'Jan 13 2019',estDate:'Jan 13 2019',Status:'Done'},
+      //   { id: 'PM-00002', task: 'Voice API', assignTo:"http://localhost:3000/static/media/pro.9726ea3d.png,http://localhost:3000/static/media/pro.9726ea3d.png,http://localhost:3000/static/media/pro.9726ea3d.png", startDate:'Jan 3 2019',endDate:'Jan 13 2019',estDate:'Jan 13 2019',Status:'Done'},
+      //   { id: 'PM-00002', task: 'Network API', assignTo:"http://localhost:3000/static/media/pro.9726ea3d.png,http://localhost:3000/static/media/pro.9726ea3d.png,http://localhost:3000/static/media/pro.9726ea3d.png", startDate:'Jan 3 2019',endDate:'Jan 13 2019',estDate:'Jan 13 2019',Status:'Done' },
+      //   { id: 'PM-00003', task: 'PGS Fundig page', assignTo:"http://localhost:3000/static/media/pro.9726ea3d.png,http://localhost:3000/static/media/pro.9726ea3d.png,http://localhost:3000/static/media/pro.9726ea3d.png", startDate:'Jan 3 2019',endDate:'Jan 13 2019',estDate:'Jan 13 2019',Status:'Done'},
+      //   { id: 'PM-00004', task: 'PGS Newsletter', assignTo:"http://localhost:3000/static/media/pro.9726ea3d.png,http://localhost:3000/static/media/pro.9726ea3d.png,http://localhost:3000/static/media/pro.9726ea3d.png", startDate:'Jan 3 2019',endDate:'Jan 13 2019',estDate:'Jan 13 2019',Status:'Done' }
+      // ],
+      paramValue: this.props.location.state,
+      LoggedinEmpDet:[],
+      isDirectReportingPerson:false,
+      projectStatusList:[],
+      items:[]   
     }
-    this.updateState = this.updateState.bind(this);
-  }
-  updateState(e) {
-    this.setState({ data: e.target.value });
   }
 
-  handleOnClick = () => {
-
-
-    //alert("yes"+this.state.data);
-    this.props.history.push({
-      pathname: '/SearchResultPage',
-      state: {
-        st: this.state.data,
-        ft: this.state.data2,
-        gmdata: this.state.getMethodData,
-        pmdata: this.state.postMethodData
-      }
-    });
-  }
+  onChange = date => this.setState({ date })
 
   componentDidMount() {
-    fetch('http://localhost:8080/getMethod/', 
-      { mode: 'cors' })
-      .then(results => {
-        return results.json();
-      })
-      .then(data => {
-        let person = data;
-        this.setState({ getMethodData: person });
-        console.log("get state: ", this.state.getMethodData);
-      });
-
-
-      fetch('http://localhost:8080/postMethod/', {
-        method: 'POST',
-        mode: 'cors' ,
+    /* Get loggin E mployee Date*/
+    var data = {
+      id: cookies.get('loggeinEmpId')
+    }
+    fetch(Server.backendServer+"getLggedinEmployeeData", {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        }).then(function(response) {
+            if (response.status >= 400) {
+              throw new Error("Bad response from server");
+            }
+            return response.json();
+        }).then(function(res) {
+            this.setState({LoggedinEmpDet:res});  
+            this.setState({isDirectReportingPerson:this.state.LoggedinEmpDet[0].Designation});     
+        }.bind(this)).catch(function(err) {
+            console.log(err)
+        });
         
-        body: {
-          "email": "yes"
-        }
-      }).then(res => res.json())
-      .then(data => {
-        let person = data;
-        this.setState({ postMethodData: person });
-        console.log("post state: ", this.state.postMethodData);
-      })
+     /* Get loggin E mployee Date*/
+    /* GET NO OF PROJECT aSSIGNED BY LEAD */
+    fetch(Server.backendServer+"noOfProjectsByLead",{
+          method:"POST",
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(data)
+      }).then(function(response){
+          if (response.status >= 400) {
+              throw new Error("Bad response from server");
+          }
+          return response.json();
+      }).then(function(res){
+          console.log(res);
+          this.setState({projectStatusList:res});    
+      }.bind(this)).catch(function(err){
+          console.log(err)
+      });
+      /* GET NO OF PROJECT aSSIGNED BY LEAD */
+
+      /* GET NO OF PROJECT aSSIGNED BY LEAD */
+    fetch(Server.backendServer+"taskReportofSub",{
+      method:"POST",
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data)
+  }).then(function(response){
+      if (response.status >= 400) {
+          throw new Error("Bad response from server");
+      }
+      return response.json();
+  }).then(function(res){
+      console.log(res);
+      this.setState({items:res});    
+  }.bind(this)).catch(function(err){
+      console.log(err)
+  });
+  /* GET NO OF PROJECT aSSIGNED BY LEAD */
+
 
   }
   render() {
@@ -68,103 +103,152 @@ class Home extends React.Component {
       <div>
         {/* <h1>Hello, world!</h1>
           <h2>It is {this.state.date.toLocaleTimeString()}.</h2> */}
-        <Header />
-        <div class="clear">
-          <div class="floatLeft leftSection">
-            <LeftSection />
+       
+        <Header Role={this.state.isDirectReportingPerson}/>
+        <div className=" dashboard grid col-2 ">
+          <div className=" leftSection">
+            {
+                this.state.LoggedinEmpDet.map(function(emp){
+                  return (
+                  <LeftSection Name={emp.EmpName} Designation={emp.Designation} />
+                  )
+                })
+
+            }
           </div>
-          <div class="floatLeft rightSection">
-            <div class="grid col-4">
-            <Tile count="30" tileName="Total project" />
-            <Tile count="9" tileName="Pending project" />
-            <Tile count="1" tileName="Progress project" />
-            <Tile count="20" tileName="Completed project" />
+          <div className=" rightSection" >
             
-          
+            <div className="flex">
+            {
+              this.state.projectStatusList.map(function(res){
+                  if(res.ProjectStatus==="Total"){
+                    return (
+                      <Tile Class="totalCount forder1" count={res.counts} tileName={res.ProjectStatus} />
+                    )
+                  }else if(res.ProjectStatus==="Completed"){
+                    return (
+                      <Tile   Class="CompletedCount forder2" count={res.counts} tileName={res.ProjectStatus} />
+                    )
+                  }else if(res.ProjectStatus==="Pending"){
+                    return (
+                      <Tile Class="PendingCount forder3" count={res.counts} tileName={res.ProjectStatus} />
+                    )
+                  }
+                })
+              }
             </div>
 
-            <div class="statsInfro clear">
-              <div class="floatLeft overall">
-                <h2>Task Overview</h2>
-                <div class="chatwrp">
-                <Chart
-                    width={'100%'}
-                    height={'467px'}
-                    chartType="Line"
-                    loader={<div>Loading Chart</div>}
-                    data={[
-                      [
-                        'Week',
-                        'Completed',
-                        'Pending',
-                        'In Progress',
-                      ],
-                      ['week1', 11.9, 17.6, 10.4],
-                      ['Week2', 37.8, 80.8, 41.8],
-                      ['Week3', 30.9, 69.5, 32.4],
-                      ['Week4', 25.4, 57, 25.7],
-                    ]}
-                    options={{
+            <div className="statsInfro clear">
+              <div className="floatLeft overall">
+                {/* <h2>Task Sheet</h2> */}
+                <div className="chatwrp timst">
+                  <div className="grid col-2">
+                  <div className="MHead"><h2>Reports</h2> </div>
+                  <div className="MHead">Sort <span className="spriteImage sorticon"></span></div>
+                  </div>
 
-                      chart: {
-                        title: 'Overall performace month wise',
-                        subtitle: 'Jan 2019',
-                        hAxis: {
-                          title: 'Total Tasks',
-                          minValue: 0,
-                        },
-                      },
-                    }}
-                    rootProps={{ 'data-testid': '3' }}
-                  />
+                  <div className="grid col-7">
+                      <div className="Head">Task id </div>
+                      <div className="Head">Task Name</div>
+                      <div className="Head">Assigned To</div>
+                      <div className="Head">Start Date</div>
+                      <div className="Head">End Date</div>
+                      <div className="Head">Est. Date</div>
+                      <div className="Head">Status</div>
+                  </div>
+                  {
+                    this.state.items.map(function(item) {
+                      return (
+                        <div className="grid col-7">
+                          <div className="gridBody">{'PM-'+item.ProjectId}</div>
+                          <div className="gridBody">{item.ProjectTitle}</div>
+                          <div className="gridBody">
+                          <div className="assProfle">
+                          {
+                            item.ProjectAssignedTo.split(",").slice(0,2).map(function(place,index){
+                                  return(
+                                    <a href="#" className="profilepic">
+                                    {/* <img src={'http://localhost:3000/static/media/'+place+'.png'} alt={'profle'} /> */}
+                                    <img src="{'./../../assests/images/'+place+'.png'}" alt={'profle'} /> 
+                                    </a>
+                                  )
+                            })
+                           
+                          }
+                           <a href="#"  className="countpic"><span className="count">{(item.ProjectAssignedTo.split(",").length)-2}+</span></a>
+                           </div>
+                          </div>
+                          <div className="gridBody">{item.ProjectTakenTime ? item.ProjectTakenTime : '-'  } </div>
+                          <div className="gridBody">{item.ProjectFinishedDate ? item.ProjectFinishedDate : '-'  } </div>
+                          <div className="gridBody">{item.ProjectEstimatedFinishDate}</div>
+                          <div className="gridBody">{item.ProjectStatus}</div>
+                        </div>
+                      );
+                    })
+                  }
+
+                  <div className="grid">
+                  <div className="viewAll">
+                    <a href="#">View all</a>
+                  </div>
+                  </div>
                 </div>
                 </div>
-               
-              <div class="floatLeft currentWork">
-                      <div class="prgressTask">
+            </div>
+
+            <div className="clear currentWork">
+            <h2>Work In Progress </h2>
+              <div className="floatLeft calsec">
+              {/* <Calendar onChange={this.onChange} value={this.state.date}  /> */}
+              </div>
+              {/* {floatLeft currentWork } */}
+              <div className="grid col-3">
+
+                      <div className="prgressTask">
                           <h3>Task in progress</h3>
                           <h4>A/B testing</h4>
-                          <span class="per">
-                           <span class="prgstat" style={{background: '#5fa2dd',width:'50%'}}></span>
+                          <span className="per">
+                           <span className="prgstat" style={{background: '#5fa2dd',width:'50%'}}></span>
                           </span>
-                          <span class="stausHed">Status
+                          <span className="stausHed">Status
                           
                           </span>
-                          <span class="status">On Hold</span>
+                          <span className="status">On Hold</span>
 
-                          <div class="btnwrp">
+                          <div className="btnwrp">
                             <a href="#">Pause</a>
                             <a href="#">Completed</a>
                           </div>
                       </div>
-                      <div class="prgressTask">
+                      <div className="prgressTask">
                           <h3>Task in progress</h3>
                           <h4>A/B testing</h4>
-                          <span class="per" >
-                          <span class="prgstat" style={{background: '#f4b400',width:'25%'}}></span>
+                          <span className="per" >
+                          <span className="prgstat" style={{background: '#f4b400',width:'25%'}}></span>
                           </span>
-                          <span class="stausHed">Status</span>
-                          <span class="status">On Hold</span>
+                          <span className="stausHed">Status</span>
+                          <span className="status">On Hold</span>
 
-                          <div class="btnwrp">
+                          <div className="btnwrp">
                             <a href="#">Pause</a>
                             <a href="#">Completed</a>
                           </div>
                       </div>
-                      <div class="prgressTask">
+                      <div className="prgressTask">
                           <h3>Task in progress</h3>
                           <h4>A/B testing</h4>
-                          <span class="per" >
-                          <span class="prgstat" style={{background: '#0ca033',width:'75%'}}></span>
+                          <span className="per" >
+                          <span className="prgstat" style={{background: '#0ca033',width:'75%'}}></span>
                           </span>
-                          <span class="stausHed">Status</span>
-                          <span class="status">On Hold</span>
+                          <span className="stausHed">Status</span>
+                          <span className="status">On Hold</span>
 
-                          <div class="btnwrp">
+                          <div className="btnwrp">
                             <a href="#">Pause</a>
                             <a href="#">Completed</a>
                           </div>
                       </div>
+                      
               </div>
             </div>
             
@@ -177,4 +261,4 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+export default withRouter(Home);
