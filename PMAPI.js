@@ -58,7 +58,7 @@ var server = app.listen(8000, "localhost", function () {
 //rest api for logged in user profile picture
 app.post('/isValiduser/', function (req, res) {
     var postData = req.body;
-    connection.query('select * from Employee where EmpEmailID=? And password=?', [postData.id,postData.password], function (error, results, fields) {
+    connection.query("select 'YES' isLoginValid,EmpID,EmpName from employee where EmpEmailID=? And password=?", [postData.id,postData.password], function (error, results, fields) {
         if (error) throw error;
         res.end(JSON.stringify(results));
     });
@@ -66,8 +66,7 @@ app.post('/isValiduser/', function (req, res) {
 //rest api for logged in user profile picture
 app.post('/getLggedinEmployeeData/', function (req, res) {
     var postData = req.body;
-    //console.log("select * from Employee where EmpEmailID="+postData.id);
-    connection.query('select * from Employee where EmpID=?', [postData.id], function (error, results, fields) {
+    connection.query('select * from employee where EmpID=?', [postData.id], function (error, results, fields) {
         if (error) throw error;
         res.end(JSON.stringify(results));
     });
@@ -77,11 +76,6 @@ app.post('/getLggedinEmployeeData/', function (req, res) {
 app.post('/isTaskAssignedSuccesssfully/', function (req, res) {
     var postData = req.body;
     console.log(postData);
-    
-    /*//console.log("select * from Employee where EmpEmailID="+postData.id);
-    //var sql="INSERT INTO project (ProjectTitle,ProjectAssignedTo,ProjectStatus,ProjectPriority,ProjectCreatedBy,ProjectTakenTime,ProjectEstimatedFinishDate,ProjectFinishedDate) VALUES (?,?,?,?,?,?,?,?)";
-    var sql = "INSERT INTO project (ProjectTitle,ProjectDescription,ProjectAssignedTo,ProjectStatus,ProjectPriority,ProjectCreatedBy,ProjectEstimatedFinishDate,ProjectRef) VALUES ('" + postData.proTitle + "','" + postData.Discription + "','" + postData.assignTo + "','" + postData.projectStatus + "','" + postData.Priority + "','" + postData.createdBy + "','" + postData.dtbco + "','" + postData.Reference + "')";
-    console.log(sql); */
     connection.query('INSERT INTO project (ProjectTitle,ProjectDescription,ProjectAssignedTo,ProjectStatus,ProjectPriority,ProjectCreatedBy,ProjectEstimatedFinishDate,ProjectRef) VALUES(?,?,?,?,?,?,?,?)', 
     [postData.proTitle,postData.Discription,postData.assignTo,postData.projectStatus,postData.Priority,postData.createdBy,postData.dtbco,postData.Reference], function (error, results, fields) {
         if (error) throw error;
@@ -91,9 +85,37 @@ app.post('/isTaskAssignedSuccesssfully/', function (req, res) {
 
 app.post('/noOfProjectsByLead/', function (req, res) {
     var postData = req.body;
-    //console.log(postData);
-    //SELECT ProjectStatus,COUNT(*) counts FROM   project   where ProjectCreatedBy=? GROUP BY ProjectStatus UNION ALL SELECT 'Total',COUNT(*) counts FROM   project where ProjectCreatedBy=?;
     connection.query("SELECT ProjectStatus,COUNT(*) counts FROM   project   where ProjectCreatedBy=? GROUP BY ProjectStatus UNION ALL SELECT 'Total',COUNT(*) counts FROM   project where ProjectCreatedBy=?", [postData.id,postData.id], function (error, results, fields) {
+        if (error) throw error;
+        res.end(JSON.stringify(results));
+    });
+  
+});
+app.post('/taskReportofSub/', function (req, res) {
+    var postData = req.body;
+   // SELECT * FROM project ORDER BY ProjectStatus desc, CASE WHEN 	ProjectStatus = 'Completed' THEN ProjectFinishedDate WHEN ProjectStatus = 'Pending' THEN projectCreatedOn End
+    connection.query("SELECT * from project where ProjectCreatedBy=? ORDER BY ProjectStatus desc, CASE WHEN ProjectStatus = 'Completed' THEN ProjectFinishedDate WHEN ProjectStatus = 'Pending' THEN projectCreatedOn End limit 5", [postData.id], function (error, results, fields) {
+        if (error) throw error;
+        res.end(JSON.stringify(results));
+    });
+  
+});
+app.post('/subordinatesList/', function (req, res) {
+    var postData = req.body;
+   // SELECT * FROM project ORDER BY ProjectStatus desc, CASE WHEN 	ProjectStatus = 'Completed' THEN ProjectFinishedDate WHEN ProjectStatus = 'Pending' THEN projectCreatedOn End
+    connection.query("SELECT EmpID,EmpName from employee where ReportingTo=?", [postData.reportingID], function (error, results, fields) {
+        if (error) throw error;
+        res.end(JSON.stringify(results));
+    });
+  
+});
+
+app.post('/addNewEmplyee/', function (req, res) {
+    var postData = req.body;
+    var isActiveUser= 'No';
+    var defaultPassword = postData.id+"@123"
+   // SELECT * FROM project ORDER BY ProjectStatus desc, CASE WHEN 	ProjectStatus = 'Completed' THEN ProjectFinishedDate WHEN ProjectStatus = 'Pending' THEN projectCreatedOn End
+    connection.query("insert into employee (EmpID,EmpEmailID,Active,password,ReportingTo) values (?,?,?,?)", [postData.id,postData.eid,isActiveUser,defaultPassword,postData.repoTo], function (error, results, fields) {
         if (error) throw error;
         res.end(JSON.stringify(results));
     });
