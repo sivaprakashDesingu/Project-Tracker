@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './Login.css';
+import image from '../../assests/images/wlcm.png';
+
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 class Login extends React.Component {
@@ -8,7 +10,7 @@ class Login extends React.Component {
         this.state = {
             email: '',
             password: '',
-            formHeading:'Please Login',
+            formHeading:'Login to your account',
             
         }
         this.updateState = this.updateState.bind(this);
@@ -83,13 +85,19 @@ class Login extends React.Component {
             <div>
                 <div className="login ">
                     <div className="fromwrp clear">
-                        <div className="floatRight projectinfo">
-                            <h1 className="manhead">Project Management</h1>
-                            <p>Get started using a simplified management stystem that does this and that and some other things now.</p>
+                        <div className="floatLeft projectinfo">
+                           
+                            <img src={image} width='600' height='500' alt="Welcome Image" />
                             
                         </div>
-                        <div className="floatLeft loginFields">
-                            <h1 className="manhead">{this.state.formHeading}</h1>
+                        <div className="floatRight loginFields">
+                            <div className="frmwrapper">
+                            <div className="l1hnd">
+                            <h1 className="manhead">Project Management</h1>
+                                <p>Get started using a simplified management system that does this and that and some other things now.</p>
+                            </div>
+                            
+                            <h2 className="manhead">{this.state.formHeading}</h2>
                             <form>
                                 <div className="field">
 
@@ -98,7 +106,7 @@ class Login extends React.Component {
                                         onBlur={this.isFloating}
                                         onChange={this.updateState}
                                     />
-                                    <label for="email">Email</label>
+                                    <label for="email">Email<sup>*</sup></label>
                                 </div>
                                 <div className="field">
 
@@ -106,13 +114,21 @@ class Login extends React.Component {
                                         onBlur={this.isFloating}
                                         onChange={this.updateState}
                                     />
-                                    <label for="paswd">Password</label>
+                                    <label for="paswd">Password<sup>*</sup></label>
                                 </div>
+                                <div className="forgot clear">
+                                    <a className="floatRight" href="#">Forgot your password?</a>
+                                   
+                                    
+                                </div>
+                                <button className="btn "  onClick={this.isLoggedin} type="button">Login</button>
                                 
                                 {/* { this.state.showResults ? <Results /> : null } */}
-                                <button className="btn "  onClick={this.isLoggedin} type="button">Submit</button>
+                                
 
                             </form>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>

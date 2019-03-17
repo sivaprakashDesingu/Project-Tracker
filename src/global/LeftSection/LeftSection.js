@@ -15,7 +15,7 @@ class LeftSection extends React.Component {
         return (
             <aside>
                 <div className="leftSections">
-                <div className="profileSection">
+                {/* <div className="profileSection">
                     <div className="userimage">
                         <img src={logos}  alt="user profile" />
                     </div>
@@ -23,40 +23,51 @@ class LeftSection extends React.Component {
                         <span className="name">{this.props.Name}</span>
                         <span className="desi">{this.props.Designation}</span>
                     </div>
-                </div>
+                </div> */}
                 <div className="section1 emp">
-                    <ul>
-                        <li className="secHeading">
-                            Activity
-                        </li>
-                        <li className="secLinks">
+                <ul>                        
+                        <li className="secLinks active">
                             <span><i className="fa fa-tachometer" aria-hidden="true"></i></span>
                             <span>Dashboard</span>
                         </li>
                         <li className="secLinks">
-                        <span><i className="fa fa-envelope" aria-hidden="true"></i></span>
-                            <span>Email</span>
+                        <span><i className="fa fa-file-text-o" aria-hidden="true"></i></span>
+                            <span>Report</span>
                         
                         </li>
+                        <li className="secLinks">
+                        <span><i className="fa fa-setting" aria-hidden="true"></i></span>
+                            <span>Settings</span>
+                        
+                        </li>                        
                     </ul>
                 </div>
                 <div className="section1 lead">
                     <div className="secHeading">
-                        <a href="#">Activity</a>
                         <ul>                        
-                        <li className="secLinks">
+                        <li className="secLinks active">
                             <span><i className="fa fa-tachometer" aria-hidden="true"></i></span>
-                            <span>Group</span>
+                            <span>Dashboard</span>
                         </li>
                         <li className="secLinks">
-                        <span><i className="fa fa-envelope" aria-hidden="true"></i></span>
-                            <span>Reporting Employees</span>
+                        <span><i className="fa fa fa-users" aria-hidden="true"></i></span>
+                            <span>Sub ordinates</span>
                         
                         </li>
+
+                        <li className="secLinks">
+                        <span><i className="fa fa-file-text-o" aria-hidden="true"></i></span>
+                            <span>Report</span>
                         
+                        </li>
+                        <li className="secLinks">
+                        <span><i className="fa fa-cog" aria-hidden="true"></i></span>
+                            <span>Settings</span>
+                        
+                        </li>                        
                     </ul>
                     </div>
-                    <div className="secHeading">
+                    {/* <div className="secHeading">
                         <a href="#">Attendace</a>
                         <ul>                        
                         <li className="secLinks">
@@ -70,8 +81,8 @@ class LeftSection extends React.Component {
                         </li>
                         
                     </ul>
-                    </div>
-                    <div className="secHeading">
+                    </div> */}
+                    {/* <div className="secHeading">
                         <a href="#">SEtting</a>
                         <ul>                        
                         <li className="secLinks">
@@ -85,7 +96,7 @@ class LeftSection extends React.Component {
                         </li>
                         
                     </ul>
-                    </div>
+                    </div> */}
                     
                 </div>
                 </div>

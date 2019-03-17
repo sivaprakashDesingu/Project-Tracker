@@ -1,4 +1,4 @@
-body{background:#f1f1f1;color:#111;font-size:14px;font-weight:400;}
+body{background:#fff;color:#111;font-size:14px;font-weight:400;}
 
 *{box-sizing:border-box;padding:0;margin:0;font-family:'Poppins', sans-serif;/* font-family:'Roboto Slab', serif; */}
 code{font-family:source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;}
@@ -23,12 +23,12 @@ header{box-shadow:0 1px 8px 0 rgba(51, 51, 51, 0.1);}
 .headerRightWrapper .user:hover{background:#f2f2f2;}
 .headerRightWrapper .user img,.headerRightWrapper .user span{vertical-align:middle;}
 .headerRightWrapper .user img{width:40px;height:40px;border-radius:50%;margin-right:10px;}
-.dropDown{position:absolute;left:0;top:78px;width:300px;background:#fff;border:1px solid #ddd;min-height:300px;box-shadow:0px 0px 11px 1px #00000026;display:none;}
-.ddwrp{position:relative;min-height:300px}
-.ddwrp .fa{position:absolute;LEFT:0;top:-20px;font-size:30px;color:#fff;}
+.dropDown{z-index:1;position:absolute;right:0;top:72px;width:300px;background:#fff;border:1px solid #ddd;min-height:300px;box-shadow:0px 0px 11px 1px #00000026;display:none;}
+.ddwrp{position:relative;min-height:307px}
+.ddwrp .fa{position:absolute;right:2px;top:-21px;font-size:30px;color:#fff;}
 .ddwrp .header{position:absolute;padding:10px 15px;border-bottom:1px solid #ddd;width:100%;}
 .ddwrp .header h3{font-size:18px;}
-.ddwrp .msgbody{height:220px;overflow-y:auto;position:absolute;top:43px;width:100%;}
+.ddwrp .msgbody{height:220px;overflow-y:auto;position:absolute;top:48px;width:100%;}
 .ddwrp .footer{position:absolute;padding:10px 15px;bottom:0;border-top:1px solid #ddd;width:100%;}
 .msgbody .floatLeft img{width:40px;height:40px;border-radius:50%;}
 .msgbody ul li{padding:10px 10px;}
@@ -40,40 +40,53 @@ header{box-shadow:0 1px 8px 0 rgba(51, 51, 51, 0.1);}
 .ddwrp .footer a{padding:0;font-size:12px;}
 .ddwrp .footer a:hover{background:none;}
 /* Left Section */
-.leftSections{background:#1a2030;color:#fff;width:225px;min-height:100vh;}
+.leftSection{box-shadow: 0 1px 8px 0 rgba(51, 51, 51, 0.1);border-right: 1px solid #ddd;margin:10px 0 0;padding:20px 0;}
+.leftSections{background:#fff;color:#464646;min-height:100vh;}
 .emp{display:none;}
 .leftSections .secHeading a{color:#70829A;font-size:11px;padding:10px 15px;text-transform:uppercase;display:block;background:#333a4d;}
-.leftSections .profileSection{padding:30px 0 0;}
+.leftSections .profileSection{padding:40px 0 0;}
 .leftSections .userimage{width:150px;height:150px;margin:0 auto;border-radius:500%;}
 .userIfo{padding:20px 0;}
 .userIfo .name,.userIfo .desi{text-align:center;display:block;font-size:14px;}
 .leftSections .userimage img{display:block;width:100%;height:100%;border-radius:50%;}
-.leftSections .secLinks{padding:10px 15px;cursor:pointer;font-size:12px;transition:.3s ease all;}
-.leftSections .secLinks:hover{color:#fff;background-color:#2986b8;}
+.leftSections .secLinks{padding:12px 15px;cursor:pointer;font-size:16px;transition:.3s ease all;border-left:5px solid transparent;}
+.leftSections .secLinks:hover{color:#fff;background-color:#5f5d5d;}
+.leftSections .active,.leftSections .active:hover{border-color:#1666D0;color:#1666D0;background:transparent}
 .leftSections .secLinks span{padding-right:10px;vertical-align:middle;}
+.leftSections .secLinks span i{font-size:20px;}
 /* Left Section */
 .bredscrmbs{padding:10px 0 30px;}
 .bredscrmbs .floatLeft span{padding-right:10px;vertical-align:middle;}
 .bredscrmbs .floatLeft span:first-child{font-size:30px;border:2px solid #000;border-radius:5px;text-align:center;padding:0 7px;margin-right:10px;}
 .bredscrmbs .floatRight{font-size:12px;color:#999;padding:11px 0 10px;}
 .bredscrmbs .curn{color:#000}
-.rightSection{width:calc(100% - 300px);padding:40px 30px;}
+.rightSection{padding:10px 30px 40px;}
 /* grid */
 .grid{display:grid;}
 .grid.col-4{grid-template-columns:repeat(4, 1fr);grid-gap:0 20px;}
 .grid.col-3{grid-template-columns:repeat(3, 1fr);grid-gap:0 20px;}
+.grid.col-2{grid-template-columns:repeat(2, 1fr);}
+.dashboard.grid.col-2{grid-template-columns:230px auto;}
 /* Change the white to any color ;) */
 @-webkit-keyframes autofill{
-to{color:#fff;background:transparent;}
+to{color:#464646;background:transparent;}
 }
 input:-webkit-autofill{-webkit-animation-name:autofill;-webkit-animation-fill-mode:both;}
 .calsec .react-calendar button{line-height:29px;}
 .lighbox{position:fixed;width:100%;min-height:100vh;background:rgba(58, 82, 94, 0.8);z-index:1;opacity:0;visibility:hidden;transition:.3s ease all}
 .lighbox.open{opacity:1;visibility:visible;}
-.lightboxWrapper{width:800px;margin:0 auto;position:relative;}
+.lightboxWrapper{width:800px;margin:0 auto;position: absolute;display:none;    left: 50%;
+    z-index: 1;
+    transform: translateX(-50%);}
+.lightboxWrapper.open{display:block;}
 
-.lightboxWrapper .fa-times{font-size:30px;position:absolute;top:20px;right:-40px;cursor:pointer;}
+.lightboxWrapper .fa-times{font-size:30px;position:absolute;top:20px;right:-40px;cursor:pointer;color:#fff;}
 .sucessMessage,.errorMessage{margin:15px 0 0;display:none;}
 .sucessMessage{color:#008260;}
 .errorMessage{color:#E11937;}
 .sucessMessage.show,.errorMessage.show{display:block;}
+.flex{display:flex;justify-content:space-between;}
+.forder3{order:3}
+.forder2{order:2}
+.forder1{order:1}
+.spriteImage{background-image:url('./assests/images/icons/PM_sprite.png');background-size:cover;background-repeat:no-repeat;}

@@ -11,57 +11,74 @@ class NewProjectForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            // Alert Message 
+            sucessMessage:'',
+            errorMessage:'',
+            // New employee 
+            employeeEmailID : '',
+            employeeID : '',
             proTitle: 'Extract Transcription form Video',
             Discription: 'Extract Transcription form Vidoe',
             Priority:'P1',
             assignTo:'sivaprakash@idp.com',
             dtbco:'26/2/2019',
             Reference:'https://aws.amazon.com/transcribe/',
-            
+            items : [
+                { EmpID: 'HCI_001', EmpName: 'Sivaprakash D'},
+                { EmpID: 'HCI_002', EmpName: 'Bubesh'},
+                { EmpID: 'HCI_003', EmpName: 'Sivakumar'},
+                { EmpID: 'HCI_004', EmpName: 'Praveen'},
+                { EmpID: 'HCI_005', EmpName: 'Prem' }
+            ],
+            show: []
         }
+        var list =[];
+        var showList =[];
+        
+        
         this.updateState = this.updateState.bind(this);
         this.isNewProjectAssigned = this.isNewProjectAssigned.bind(this);   
+        this.employeeListAjax = this.employeeListAjax.bind(this);
     }
 
     componentDidMount() {
-        /*svar data = {
-            id: cookies.get('loggeinEmpId')
-        }
-        fetch(Server.backendServer+"noOfProjectsByLead",{
-            method:"POST",
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(data)
-        }).then(function(response){
-            if (response.status >= 400) {
-                throw new Error("Bad response from server");
-            }
-            return response.json();
-        }).then(function(data){
-            console.log(data);
-
-        }.bind(this)).catch(function(err){
-            console.log(err)
-        });*/
+        this.employeeListAjax(); 
     }
-
+    componentDidUpdate(){
+        //this.isNewProjectAssigned(); 
+    }
     updateState(evt) {
         this.setState({ [evt.target.name]: evt.target.value });
     }
 
     isNewProjectAssigned(){
-        var data = {
-            proTitle: this.state.proTitle,
-            Discription: this.state.Discription,
-            Priority:this.state.Priority,
-            assignTo:this.state.assignTo,
-            dtbco:this.state.dtbco,
-            Reference:this.state.Reference,
-            createdBy:cookies.get('loggeinEmpId'),
-            projectStatus:'Pending',
-            CreateOn:dateTimeNow(),
-        }
+         // Loading Subordinates in the array 
+         var data = {};
+         var URL;
+         if(this.props.FromType === 'NewTask'){
+            data = {
+                proTitle: this.state.proTitle,
+                Discription: this.state.Discription,
+                Priority:this.state.Priority,
+                assignTo:this.state.assignTo,
+                dtbco:this.state.dtbco,
+                Reference:this.state.Reference,
+                createdBy:cookies.get('loggeinEmpId'),
+                projectStatus:'Pending',
+                CreateOn:dateTimeNow(),
+            }
+            URL = 'isTaskAssignedSuccesssfully';
+         }else{
+            data = {
+               id:this.state.employeeID,
+               eid: this.state.employeeEmailID,
+               repoTo: cookies.get('loggeinEmpId')
+            }
+            URL = 'addNewEmplyee';
+         }
+        
         console.log(data);
-        fetch(Server.backendServer+"isTaskAssignedSuccesssfully", {
+        fetch(Server.backendServer+URL, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(data)
@@ -72,13 +89,17 @@ class NewProjectForm extends React.Component {
             return response.json();
         }).then(function(data) {
             console.log(data);
-            if(data.affectedRows==1){
-                document.getElementById("sucessMessage").classList.add("show");
-                document.getElementById("errorMessage").classList.remove("show");
+            if(this.props.FromType === 'NewTask'){
+                this.setState({sucessMessage:'Project assigned successfully',errorMessage:'Unable to create project, Something went wrong.'}) 
             }else{
-                document.getElementById("errorMessage").classList.add("show");
-                document.getElementById("sucessMessage").classList.remove("show");
-                
+                this.setState({sucessMessage:'Employee has been added',errorMessage:'Unable to add employee, Something went wrong.'}) 
+            }
+            if(data.affectedRows==1){
+                document.getElementById(this.props.FromType+"sucessMessage").classList.add("show");
+                document.getElementById(this.props.FromType+"errorMessage").classList.remove("show");
+            }else{
+                document.getElementById(this.props.FromType+"sucessMessage").classList.add("show");
+                document.getElementById(this.props.FromType+"errorMessage").classList.remove("show");
             }    
             
         }.bind(this)).catch(function(err) {
@@ -96,59 +117,140 @@ class NewProjectForm extends React.Component {
             target.parentNode.classList.add('active');
         }
     }
+
+    employeeListAjax(e){
+        var data = {
+            reportingID: cookies.get("loggeinEmpId")
+        }
+        console.log(data);
+        fetch(Server.backendServer+"subordinatesList", {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        }).then(function(response) {
+            if (response.status >= 400) {
+              throw new Error("Bad response from server");
+            }
+            return response.json();
+        }).then(function(data) {
+            console.log("Employees are"+JSON.stringify(data));
+            if(data.length>=1){
+                document.getElementById("empDdwn").classList.add("open");
+                this.list = data;    
+            }else{
+                document.getElementById("empDdwn").classList.remove("open");
+            }    
+           
+        }.bind(this)).catch(function(err) {
+            console.log(err)
+        })
+    }
+    
+    // getEmpList(){
+    //     //console.log("yes");
+    //      this.setState({show})=this.state.items.map(function(emp){
+    //         return (
+    //                 <li>{emp.EmpName}</li> 
+    //          )
+    //     })
+    // }
     render() {
         return (
             <div className="newProFormWrap">
                 <form className="newProForm">
-                    <h2>Create a new task </h2>
-                <div className="field">
-                    <input id='proTitle' type="text" name="proTitle" autoComplete='off'
-                        onChange={this.updateState}
-                        onBlur={this.isFloating}
-                    />
-                    <label htmlFor="email">Project Title</label>
-                </div>
+                    {this.props.FromType=="NewTask" ? <h2>Create a new task </h2> : <h2>Add a new employee</h2>} 
 
-                <div className="field">
-                <textarea id="Discription" rows='5'  name="Discription" onChange={this.updateState} onBlur={this.isFloating}></textarea>
-                    <label htmlFor="Discription">Discription</label>
-                </div>
+                    {this.props.FromType=="NewTask" ? 
+                        /* TRUE STATEMENT START*/
+                        <div className="TaskWrapper">
+                            <div className="field">
+                                <input id='proTitle' type="text" name="proTitle" autoComplete='off'
+                                    onChange={this.updateState}
+                                    onBlur={this.isFloating}
+                                />
+                                <label htmlFor="email">Project Title</label>
+                            </div>
 
-                <div className="field">
-                    <input id='Priority' type="text" name="Priority" autoComplete='off'
-                        onChange={this.updateState}
-                        onBlur={this.isFloating}
-                    />
-                    <label htmlFor="Priority">Priority</label>
-                </div>
-                <div className="field">
-                    <input id='assignTo' type="text" name="assignTo" autoComplete='off'
-                        onChange={this.updateState}
-                        onBlur={this.isFloating}
-                    />
-                    <label htmlFor="assignTo">Assign To</label>
-                </div>
+                            <div className="field">
+                            <textarea id="Discription" rows='5'  name="Discription" onChange={this.updateState} onBlur={this.isFloating}></textarea>
+                                <label htmlFor="Discription">Discription</label>
+                            </div>
 
-                
-                <div className="field">
-                    <input id='dtbco' type="text" name="dtbco" autoComplete='off'
-                        onChange={this.updateState}
-                        onBlur={this.isFloating}
-                    />
-                    <label htmlFor="dtbco">Date to be Completed</label>
-                </div>
+                            <div className="field">
+                                <input id='Priority' type="text" name="Priority" autoComplete='off'
+                                    onChange={this.updateState}
+                                    onBlur={this.isFloating}
+                                />
+                                <label htmlFor="Priority">Priority</label>
+                            </div>
+                            <div className="field">
+                                <input id='assignTo' type="text" name="assignTo" autoComplete='off'
+                                    onChange={this.updateState}
+                                    onBlur={this.isFloating}
+                                    onKeyPress={this.getEmpList}
+                                />
+                                <label htmlFor="assignTo">Assign To</label>
+                                <div id="empDdwn" className="DropDown">
+                                    <ul>
+                                        {this.showList}
+                                     </ul>
+                               </div>
+                            </div>                
+                            <div className="field">
+                                <input id='dtbco' type="text" name="dtbco" autoComplete='off'
+                                    onChange={this.updateState}
+                                    onBlur={this.isFloating}
+                                />
+                                <label htmlFor="dtbco">Date to be Completed</label>
+                            </div>
 
-                <div className="field">
-                <textarea id="Reference" name="Reference" rows='5' onChange={this.updateState} onBlur={this.isFloating}></textarea>
-                    <label htmlFor="Reference">Reference</label>
-                </div>               
-                <div className="alertWrapper">
-                    <p id="sucessMessage" className="sucessMessage">Project assigned successfully.</p>
-                    <p id="errorMessage" className="errorMessage">Unable to create project, Something went wrong.</p>
-                </div>
-                <div className="btnwrpr clear">
-                    <button type="button" onClick={this.isNewProjectAssigned} className="floatRight btn orgbtn">Submit</button>
-                </div>
+                            <div className="field">
+                            <textarea id="Reference" name="Reference" rows='5' onChange={this.updateState} onBlur={this.isFloating}></textarea>
+                                <label htmlFor="Reference">Reference</label>
+                            </div>               
+                            <div className="alertWrapper">
+                                <p id={this.props.FromType+"sucessMessage"} className="sucessMessage">Project assigned successfully.</p>
+                                <p id={this.props.FromType+"errorMessage"} className="errorMessage">Unable to create project, Something went wrong.</p>
+                            </div>
+                            <div className="btnwrpr clear">
+                                <button type="button" onClick={this.isNewProjectAssigned} className="floatRight btn orgbtn">Assign Task</button>
+                            </div>
+                    
+                        </div> 
+                        /* Addine New Task */
+                        /* TRUE STATEMENT START*/
+                        :  /* ELSE LOOP START*/
+                        /* Addine New Employee */
+                        <div className="NewEmpWrapper">
+                            <div className="field">
+                                <input id='employeeID' type="text" name="employeeID" autoComplete='off'
+                                    onKeyPress={this.getEmpList}
+                                    onChange={this.updateState} 
+                                    onBlur={this.isFloating}
+                                    
+                                />
+                                <label htmlFor="employeeID">Employee ID</label>
+                            </div>
+                            <div className="field">
+                                <input id='employeeEmailID' type="email" name="employeeEmailID" autoComplete='off'
+                                    onKeyPress={this.getEmpList}
+                                    onChange={this.updateState} 
+                                    onBlur={this.isFloating}
+                                    
+                                />
+                                <label htmlFor="employeeEmailID">Employee Mail ID</label>
+                            </div>
+                            <div className="alertWrapper">
+                                <p id={this.props.FromType+"sucessMessage"} className="sucessMessage">Project assigned successfully.</p>
+                                <p id={this.props.FromType+"errorMessage"} className="errorMessage">Unable to create project, Something went wrong.</p>
+                            </div>
+                            <div className="btnwrpr clear">
+                                <button type="button" onClick={this.isNewProjectAssigned} className="floatRight btn orgbtn">Add Employee</button>
+                            </div>
+                        </div>
+                    /* Addine New Employee */
+                    /* ELSE LOOP END*/
+                    }                 
                 </form>
             </div>
         );

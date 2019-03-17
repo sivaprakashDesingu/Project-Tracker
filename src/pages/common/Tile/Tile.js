@@ -5,10 +5,7 @@ class Tile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      count: 'Initial data...',
-      header: 'Manisha',
-      getMethodData: "yet to fetch",
-      postMethodData: "yet to fetch",
+      
     }
     //this.updateState = this.updateState.bind(this);
   }
@@ -17,12 +14,12 @@ class Tile extends React.Component {
 
   render() {
     return (
-         <div className="midtile">
+         <div className={'midtile '+ this.props.Class}>
             <div className="titleWrp clear">
               
                 <div className="clear">
-                  <span className="floatLeft countHeading">{this.props.tileName}</span>
-                  <span className="floatRight ">Feb <i className="fa fa-angle-down"></i></span>
+                  <span className="floatLeft countHeading"><strong>{this.props.tileName} Project</strong></span>
+                  <span className="floatRight "><strong>Feb <i className="fa fa-angle-down"></i></strong></span>
                 </div>
                 <div className="rippleCircle">
                 <h2>{this.props.count}</h2>
