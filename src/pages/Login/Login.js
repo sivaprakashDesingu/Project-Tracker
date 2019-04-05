@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
-import './Login.css';
-import image from '../../assests/images/wlcm.png';
-
 import Cookies from 'universal-cookie';
+import { extendObservable } from 'mobx';
+import { observer }  from 'mobx-react';
+
+import PTStore from '../server/PTStore'
+import image from '../../assests/images/wlcm.png';
+import './Login.css';
+
 const cookies = new Cookies();
 class Login extends React.Component {
     constructor(props) {
@@ -21,18 +25,6 @@ class Login extends React.Component {
     updateState(e) {
         this.setState({ [e.target.name]: e.target.value });
     }
-
-    /* handleOnClick = () => {
-       this.props.history.push({
-         pathname: '/Home',
-         state: {
-           un: this.state.data,
-           paswd: this.state.data2,
-         }
-       });
-     }*/
-
-
      isLoggedin = () =>{
          
         var data = {
@@ -57,11 +49,11 @@ class Login extends React.Component {
                 cookies.set('loggeinEmpEmail', this.state.email, { path: '/' });
                 this.props.history.push({
                     pathname: '/Home',
-                    state: {
-                      Empemail: this.state.email,
-                      EmpName:data[0].EmpName,
-                      employeeId: data[0].EmpID
-                    }
+                    // state: {
+                    //   Empemail: this.state.email,
+                    //   EmpName:data[0].EmpName,
+                    //   employeeId: data[0].EmpID
+                    // }
                   });
             }
         }.bind(this)).catch(function(err) {
@@ -80,9 +72,15 @@ class Login extends React.Component {
             target.parentNode.classList.add('active');
         }
     }
+
+    // updateMobxValue(){
+    //     MyStore.empDeta.Name='manoj';
+    // }
     render() {
         return (
             <div>
+                {/* {MyStore.empDeta.Name}
+                <button onClick={this.updateMobxValue}>Change</button> */}
                 <div className="login ">
                     <div className="fromwrp clear">
                         <div className="floatLeft projectinfo">
@@ -137,4 +135,5 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+// export default Login;
+export default observer(Login);

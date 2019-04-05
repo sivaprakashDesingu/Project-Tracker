@@ -1,0 +1,27 @@
+.columnautoFit{grid-template-columns: repeat( auto-fill, minmax(350px, 1fr) );grid-gap:20px;}
+.empProfieCard{position: relative;background: #FDFEFF;transition: background .6s ease;border-radius: 10px;box-shadow: 0 5px 4px rgba(0, 0, 0, 0.2);transition:.5s ease all;}
+.empProfieCard:hover{transform:scale(1.033);/* box-shadow:0 8px 40px rgba(0, 0, 0, 0.8) */}
+.profile{position: relative;padding: 20px 20px 0;border-bottom:1px solid #ddd}
+.profile .thumbnail{width:80px;height:80px;display: flex;margin:0 auto 1.5em;border-radius: 100%;box-shadow: 0 13px 26px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.2);}
+.profile .prcontent {padding:0 0 0 30px;}
+.profile .name{color: #2D354A;font-size: 22px;margin-bottom:5px;}
+.profile .title{ color: #7C8097; font-size:12px;padding:0 0 5px;letter-spacing: 1.5px;}
+.profile .description{color: #080911;font-size: 14px;font-weight: 300;text-align: center;margin-bottom: 1.3em;}
+.currentProject .btn{color: #fff;width: 130px;display: block;cursor: pointer;margin:0 auto;box-shadow: 0 4px 2px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.16);
+background: linear-gradient(to right, #e11937 0%, #ff8300 100%);text-transform:uppercase;}
+.profile .btn:hover{background: linear-gradient(to right, #ff8300 0%, #e11937 100%);}
+/* .prcount{width:200px;margin:40px auto 0;position: static;bottom:0;padding:20px 0;border-top:1px solid #ddd  ;left: 50%;transform: translateX(-50%);} */
+.prcount{padding:15px 0;border-bottom:1px solid #ddd}
+.contList{padding:0 20px;}
+.currentProject{padding:15px 20px;}
+.contList .Title,.contList .pcount{display:block;text-align:center}
+.contList.total{color:rgba(156, 103, 219,1)}
+.contList.completed{color:#83b753}
+.contList.pending{color:rgb(237, 86, 101)}
+.contList .pcount{font-weight:bold;}
+
+.icons{width:50px;height:50px;border-radius:50%;position: relative;}
+.icons.github{background: linear-gradient(to right, #C90A6D 0%, #FF48A0 100%);}
+.icons.linkedIn{background: linear-gradient(to right, #5E5AEC 0%, #3F9EFC 100%);}
+.icons.stackoverflow{background: linear-gradient(to right, #1c1f2a 0%, #8d8f91 100%);}
+.icons .fa{position: absolute;left: 50%;top: 50%;transform: translate(-50%,-50%);font-size: 20px;color: #fff;}
