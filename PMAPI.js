@@ -103,7 +103,7 @@ app.post('/taskReportofSub/', function (req, res) {
 app.post('/subordinatesList/', function (req, res) {
     var postData = req.body;
    // SELECT * FROM project ORDER BY ProjectStatus desc, CASE WHEN 	ProjectStatus = 'Completed' THEN ProjectFinishedDate WHEN ProjectStatus = 'Pending' THEN projectCreatedOn End
-    connection.query("SELECT EmpID,EmpName from employee where ReportingTo=?", [postData.reportingID], function (error, results, fields) {
+    connection.query("SELECT EmpID,EmpName,EmpEmailID,Designation,ProfilePath,Team from employee where ReportingTo=?", [postData.reportingID], function (error, results, fields) {
         if (error) throw error;
         res.end(JSON.stringify(results));
     });
@@ -115,7 +115,7 @@ app.post('/addNewEmplyee/', function (req, res) {
     var isActiveUser= 'No';
     var defaultPassword = postData.id+"@123"
    // SELECT * FROM project ORDER BY ProjectStatus desc, CASE WHEN 	ProjectStatus = 'Completed' THEN ProjectFinishedDate WHEN ProjectStatus = 'Pending' THEN projectCreatedOn End
-    connection.query("insert into employee (EmpID,EmpEmailID,Active,password,ReportingTo) values (?,?,?,?)", [postData.id,postData.eid,isActiveUser,defaultPassword,postData.repoTo], function (error, results, fields) {
+    connection.query("insert into employee (EmpID,EmpEmailID,Active,password,ReportingTo) values (?,?,?,?,?)", [postData.id,postData.eid,isActiveUser,defaultPassword,postData.repoTo], function (error, results, fields) {
         if (error) throw error;
         res.end(JSON.stringify(results));
     });
