@@ -1,13 +1,5 @@
-.midtile{
-    background: #fff;
-    padding: 20px 20px 40px;
-    transition:.5s ease all;
-    width:32.222%;
-    box-shadow:-1px -1px 8px 1px rgba(86, 83, 83, 0.1)
-}
-.midtile:hover{
-box-shadow:4px 10px 11px 6px rgba(86, 83, 83, 0.1);
-}
+.midtile{background: #fff;padding: 20px 20px 40px;transition:.5s ease all;width:32.222%;box-shadow:-1px -1px 8px 1px rgba(86, 83, 83, 0.1);;}
+.midtile:hover{box-shadow:4px 10px 11px 6px rgba(86, 83, 83, 0.1);}
 .totalCount  *{color:rgba(156, 103, 219,1);}
 .CompletedCount  *{color:#83b753;}
 .PendingCount *{color:rgb(237, 86, 101)}

@@ -1,6 +1,12 @@
 .headerWrappper{padding:5px;background:#fff;}
-.leadsection{padding:24px 40px 24px 11px;}
+.leadsection{padding:34px 40px 34px 11px;}
+.notification{padding:10px 0  10px}
 .leadsection a{padding:7px 20px;min-width:150px;color:#1666D0;border:1px solid #1666D0;border-radius:25px;font-size:14px;margin-right:20px;}
 .createProject::before,.createEmp::before{font-family:'fontawesome';    padding-right: 10px;}
 .createProject::before{content:"\f067";}
 .createEmp::before{content:"\f007";}
+.headSearch{position: relative;transition:.5s ease all;top:-15px;}
+.sachinpt label{position: absolute;top: 40px;left: 0;width: 100%;transition:.5s ease all;}
+input:focus ~ label{top:10px;}
+.headSearch .btn{border-radius: 5px;max-width: 50px;min-width: 50px;background: unset;color:#1C1F2A;}
+.sachbtn{position: absolute;right:-12px;top:5px;}

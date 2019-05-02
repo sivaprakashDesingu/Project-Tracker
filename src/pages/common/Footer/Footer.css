@@ -1,0 +1,11 @@
+footer{
+    background:#1E202D;color:#fff;
+}
+.footerWrapper{
+   padding:40px 0;width:1024px;margin:0 auto;
+}
+.mrattm ul{margin:30px 0 0;}
+.mrattm ul li:first-child{margin-left:0;}
+.mrattm ul li{margin:0 0 15px 20px;float:left;}
+.mrattm ul li a:hover{text-decoration:underline;}
+.mrattm ul li a{color:#a6aab6;}

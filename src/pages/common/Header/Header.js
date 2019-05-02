@@ -1,26 +1,46 @@
 import React, { Component } from 'react';
+import { extendObservable } from 'mobx';
+import { observer }  from 'mobx-react';
+import PTStore from '../../server/PTStore';
 import './Header.css';
-// import logo from './../assests/images/logo/logo.png';
-// import NewProjectForm from './../newProForm/newProForm';
 import NewProjectForm from './../../newProForm/newProForm';
 import { withRouter } from 'react-router-dom'
 import Cookies from 'universal-cookie';
+
+
 
 class Header extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-              whichForm:""
+              whichForm:"",
+              topSearch:''
         };
 
         this.openCreateProjectModel = this.openCreateProjectModel.bind(this);
+        this.updateState = this.updateState.bind(this);
+        this.isFloating = this.isFloating.bind(this);
       }
 
+
+    updateState(e) {
+        this.setState({ [e.target.name]: e.target.value });
+    }
+
+    isFloating(e) {
+
+        var target = e.target;
+        if (target.value.length <= 0) {
+            target.parentNode.classList.remove('active');
+        } else {
+            target.parentNode.classList.add('active');
+        }
+    }
+
       openCreateProjectModel(evt){
-         // console.log(evt.target.id);
-          this.setState({whichForm:evt.target.id});
-         document.getElementById("newProjectLightbox").classList.toggle("open")
-         document.getElementById("newProjectLightboxInner").classList.toggle("open")
+         
+         document.getElementById("newProjectLightbox").classList.toggle("open");
+         document.getElementById("newProjectLightboxInner").classList.toggle("open");
       }
     render() {
         return (
@@ -28,7 +48,7 @@ class Header extends React.Component {
                 <div id="newProjectLightbox" className="lighbox"></div>
                 <div id="newProjectLightboxInner" className="lightboxWrapper">
                     <span onClick={this.openCreateProjectModel} className="fa fa-times"></span>
-                    <NewProjectForm FromType={this.state.whichForm} />
+                    <NewProjectForm />
                 </div>
                 
                 
@@ -41,15 +61,7 @@ class Header extends React.Component {
                         </div>
                         
 
-                        <div className="headerRightWrapper floatRight">
-                <div className="user floatLeft">
-                    <a href="#">
-                        <img src="http://squaredesigns.net/jasmine/img/av1.png" alt="user_profile" />
-                        <span>{this.props.Name}</span>
-                    </a>
-                </div>
 
-            </div>
 
                         <div className="floatLeft leadsection">
 
@@ -58,14 +70,14 @@ class Header extends React.Component {
                                 if (this.props.Role == "Senior Manager") {
                                     return (
                                         <div>
-                                             <a id="NewTask" className="createProject" href="javascript:void(0);" onClick={this.openCreateProjectModel}>Create Project</a>
+                                             <a id="NewTask" className="createProject" href="javascript:void(0);" onClick={this.openCreateProjectModel}>Create Task</a>
                                              <a id="addEmp" className="createEmp"  href="javascript:void(0);" onClick={this.openCreateProjectModel}>Add Employee</a>
                                        </div>
                                     )
                                 }
                             })()}
                         </div>
-
+                        
                         <div className="notification floatRight">
                             {/* <div className="floatLeft msgbox">
                                 <a href="#">
@@ -130,7 +142,16 @@ class Header extends React.Component {
 
                                 </div>
                             </div> */}
-                            <div className="floatLeft notbox">
+
+                            <div className="headerRightWrapper floatRight">
+                                <div className="user floatLeft">
+                                    <a href="#">
+                                        <img src="http://squaredesigns.net/jasmine/img/av1.png" alt="user_profile" />
+                                        <span>{this.props.Name}</span>
+                                    </a>
+                                </div>
+                             </div>
+                            <div className="floatRight notbox">
                                 <a href="#">
                                     <i className="fa fa-bell" aria-hidden="true"></i>
                                 </a>
@@ -185,14 +206,26 @@ class Header extends React.Component {
                                             </ul>
                                         </div>
                                         <div className="footer">
-                                            <a href="#">
-                                                Show all Messages
-                                    </a>
+                                            <a href="#">Show all Messages </a>
                                         </div>
                                     </div>
 
                                 </div>
                             </div>
+                            <div className="headSearch floatRight">
+                            <div className="sachinpt floatLeft"> 
+                                <input id="topSearch" type="text" name="topSearch"
+                                 onBlur={this.isFloating}
+                                 onChange={this.updateState}
+                                  />    
+                                <label for="topSearch">Type here.....</label>
+                            </div>
+                            <div className="sachbtn floatLeft">
+                                <button class="btn" aria-label="Search" >
+                                    <span className="fa fa-search"></span>
+                                </button>
+                            </div>
+                        </div>
                         </div>
                     </div>
                 </header>
